@@ -11,6 +11,11 @@ public class User {
         this.userPass = userPass;
     }
 
+    public User(String userName, String userPass) {
+        this.userName = userName;
+        this.userPass = userPass;
+    }
+
     public int getIdUser() {
         return idUser;
     }

@@ -43,7 +43,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 public class LoginActivity extends AppCompatActivity {
 
     EditText usernameLog, passwordLog;
-    Button loginLog;
+    Button loginLog, registerLog;
     DataBase dbLog;
 
     private View mProgressView;
@@ -57,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         usernameLog = (EditText)findViewById(R.id.usernameLog);
         passwordLog = (EditText)findViewById(R.id.passwordLog);
         loginLog = (Button) findViewById(R.id.btnLoginLog);
+        registerLog = (Button)findViewById(R.id.btnRegisterLog);
 
         mProgressView = findViewById(R.id.login_progress);
 
@@ -79,6 +80,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        registerLog.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(i);
+            }
+        });
 
 
     }

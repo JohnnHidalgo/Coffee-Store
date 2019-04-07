@@ -46,4 +46,17 @@
         android:layout_marginTop="8dp"
         android:text="Button"/>
 
+    <Button
+        android:id="@+id/btnRegisterLog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="No tienes una cuanta, Registrate"/>
+
 </LinearLayout>
