@@ -1,6 +1,7 @@
 package com.example.johnnhidalgo.project.login;
 
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,21 +10,29 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.johnnhidalgo.project.Database.DataBase;
+import com.example.johnnhidalgo.project.Database.DatabaseHelper;
 import com.example.johnnhidalgo.project.R;
+import com.example.johnnhidalgo.project.helpers.InputValidation;
 import com.example.johnnhidalgo.project.modelos.User;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    DataBase db;
+
+    private final AppCompatActivity activity = RegisterActivity.this;
+    DatabaseHelper db;
     EditText username, password, cpassword;
     Button register,login;
+    InputValidation inputValidation;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        db = new DataBase(this);
+        db = new DatabaseHelper(activity);
+        inputValidation = new InputValidation(activity);
+        user = new User();
         username= (EditText)findViewById(R.id.username);
         password = (EditText)findViewById(R.id.password);
         cpassword = (EditText)findViewById(R.id.cpassword);
@@ -49,34 +58,21 @@ public class RegisterActivity extends AppCompatActivity {
                 cpasswordtxt= cpassword.getText().toString();
 
 
+                if (!db.checkUser(usernametxt)) {
+
+                    user.setUserName(usernametxt);
+                    user.setUserPass(passwordtxt);
+
+                    db.addUser(user);
 
 
-                if (usernametxt.equals("")||passwordtxt.equals("")||cpasswordtxt.equals("")){
-                    Toast.makeText(getApplicationContext(), "Fields are empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Registro Correcto!",Toast.LENGTH_SHORT).show();
+                    emptyInputEditText();
+
+
+                } else {
+                    Toast.makeText(getApplicationContext(),"Registro Incorrecto!",Toast.LENGTH_SHORT).show();
                 }
-                else{
-                    if(passwordtxt.equals(cpasswordtxt)){
-
-                        Boolean checkusername = db.checkusername(usernametxt);
-
-                        if (checkusername== true){
-
-
-                            Boolean insert = db.addUser(new User(usernametxt,passwordtxt));
-                            if (insert == true){
-                                Toast.makeText(getApplicationContext(),"Registro Completado", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        else {
-                            Toast.makeText(getApplicationContext(),"Username existente", Toast.LENGTH_SHORT).show();
-
-                        }
-                    }
-                    Toast.makeText(getApplicationContext(),"Password distintos", Toast.LENGTH_SHORT).show();
-                }
-
-
-
 
             }
         });
@@ -84,4 +80,12 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     }
+
+    private void emptyInputEditText() {
+        username.setText(null);
+        password.setText(null);
+        cpassword.setText(null);
+    }
+
+
 }
