@@ -1,7 +1,9 @@
-package com.example.johnnhidalgo.project;
+package com.example.johnnhidalgo.project.Admin.modules;
 
 import android.os.Bundle;
 import android.app.Activity;
+
+import com.example.johnnhidalgo.project.R;
 
 public class PersonalActivity extends Activity {
 

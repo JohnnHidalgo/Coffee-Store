@@ -30,7 +30,7 @@
             android:name=".login.RegisterActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".PersonalActivity"
+            android:name=".Admin.modules.PersonalActivity"
             android:label="@string/title_activity_personal"></activity>
     </application>
 
