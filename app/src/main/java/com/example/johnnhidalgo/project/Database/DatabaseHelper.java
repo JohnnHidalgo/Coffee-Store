@@ -134,16 +134,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     }
 
     public boolean checkUser(String username) {
-
         String[] columns = {
                 COLUMN_USER_ID
         };
         SQLiteDatabase db = this.getReadableDatabase();
-
         String selection = COLUMN_USER_NAME + " = ?";
-
         String[] selectionArgs = {username};
-
         Cursor cursor = db.query(TABLE_USER, //Table to query
                 columns,                    //columns to return
                 selection,                  //columns for the WHERE clause
@@ -158,9 +154,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         if (cursorCount > 0) {
             return true;
         }
-
         return false;
     }
+
+
+
+
+
 
 
 

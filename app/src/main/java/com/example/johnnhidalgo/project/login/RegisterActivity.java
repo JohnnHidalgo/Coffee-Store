@@ -57,21 +57,30 @@ public class RegisterActivity extends AppCompatActivity {
                 passwordtxt= password.getText().toString();
                 cpasswordtxt= cpassword.getText().toString();
 
+                if (usernametxt.equals("")||passwordtxt.equals("")||cpasswordtxt.equals("")){
+                    Toast.makeText(getApplicationContext(), "Espacios vacíos", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    if(passwordtxt.equals(cpasswordtxt)){
+                        if (!db.checkUser(usernametxt)) {
 
-                if (!db.checkUser(usernametxt)) {
+                            user.setUserName(usernametxt);
+                            user.setUserPass(passwordtxt);
 
-                    user.setUserName(usernametxt);
-                    user.setUserPass(passwordtxt);
-
-                    db.addUser(user);
+                            db.addUser(user);
 
 
-                    Toast.makeText(getApplicationContext(),"Registro Correcto!",Toast.LENGTH_SHORT).show();
-                    emptyInputEditText();
+                            Toast.makeText(getApplicationContext(),"Registro Correcto!",Toast.LENGTH_SHORT).show();
+                            emptyInputEditText();
 
 
-                } else {
-                    Toast.makeText(getApplicationContext(),"Registro Incorrecto!",Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(),"Registro Incorrecto!",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(),"Passwords distintos", Toast.LENGTH_SHORT).show();
+                    }
                 }
 
             }

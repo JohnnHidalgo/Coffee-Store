@@ -68,6 +68,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String username = usernameLog.getText().toString();
                 String password = passwordLog.getText().toString();
+
+
+
                 if(dbLog.checkUser(username,password)){
                     Toast.makeText(getApplicationContext(),"Bienvenido",Toast.LENGTH_SHORT).show();
                     Intent accountsIntent = new Intent(activity, MenuAdminActivity.class);

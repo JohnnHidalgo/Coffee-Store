@@ -68,6 +68,4 @@ public class PersonalActivity extends AppCompatActivity {
         }.execute();
     }
 
-
-
 }
