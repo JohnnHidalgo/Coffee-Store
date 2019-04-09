@@ -33,6 +33,7 @@ import android.widget.Toast;
 
 import com.example.johnnhidalgo.project.Admin.MenuAdminActivity;
 import com.example.johnnhidalgo.project.Database.DataBase;
+import com.example.johnnhidalgo.project.Database.DatabaseHelper;
 import com.example.johnnhidalgo.project.R;
 
 import java.util.ArrayList;
@@ -41,10 +42,11 @@ import java.util.List;
 import static android.Manifest.permission.READ_CONTACTS;
 
 public class LoginActivity extends AppCompatActivity {
+    private final AppCompatActivity activity = LoginActivity.this;
 
     EditText usernameLog, passwordLog;
     Button loginLog, registerLog;
-    DataBase dbLog;
+    DatabaseHelper dbLog;
 
     private View mProgressView;
 
@@ -53,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        dbLog = new DataBase(this);
+        dbLog = new DatabaseHelper(activity);
         usernameLog = (EditText)findViewById(R.id.usernameLog);
         passwordLog = (EditText)findViewById(R.id.passwordLog);
         loginLog = (Button) findViewById(R.id.btnLoginLog);
@@ -66,17 +68,30 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String username = usernameLog.getText().toString();
                 String password = passwordLog.getText().toString();
-
-                Boolean checkuser= dbLog.usenamepassword(username,password);
-
-                if (checkuser == true){
-                    Toast.makeText(getApplicationContext(), "Bienbenido", Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(LoginActivity.this, MenuAdminActivity.class);
-                    startActivity(i);
+                if(dbLog.checkUser(username,password)){
+                    Toast.makeText(getApplicationContext(),"Bienvenido",Toast.LENGTH_SHORT).show();
+                    Intent accountsIntent = new Intent(activity, MenuAdminActivity.class);
+                    startActivity(accountsIntent);
+                } else {
+                    Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_SHORT).show();
                 }
-                else {
-                    Toast.makeText(getApplicationContext(),"Error", Toast.LENGTH_SHORT).show();
-                }
+                /*
+
+            if (databaseHelper.checkUser(textInputEditTextEmail.getText().toString().trim()
+                , textInputEditTextPassword.getText().toString().trim())) {
+
+
+            Intent accountsIntent = new Intent(activity, UsersListActivity.class);
+            accountsIntent.putExtra("EMAIL", textInputEditTextEmail.getText().toString().trim());
+            emptyInputEditText();
+            startActivity(accountsIntent);
+
+
+        } else {
+            // Snack Bar to show success message that record is wrong
+            Snackbar.make(nestedScrollView, getString(R.string.error_valid_email_password), Snackbar.LENGTH_LONG).show();
+        }
+                 */
             }
         });
 
