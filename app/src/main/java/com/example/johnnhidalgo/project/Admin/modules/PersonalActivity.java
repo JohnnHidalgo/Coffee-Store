@@ -1,5 +1,7 @@
 package com.example.johnnhidalgo.project.Admin.modules;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
@@ -7,6 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.johnnhidalgo.project.Database.DatabaseHelper;
 import com.example.johnnhidalgo.project.R;
@@ -23,12 +28,11 @@ public class PersonalActivity extends AppCompatActivity {
     private RecyclerView recyclerViewUsers;
     private UsersRecyclerAdapter usersRecyclerAdapter;
     private DatabaseHelper db;
+    private Button btnDelete;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal);
-
-
         recyclerViewUsers = (RecyclerView) findViewById(R.id.recyclerViewUsers);
 
         listUsers = new ArrayList<>();
@@ -42,6 +46,7 @@ public class PersonalActivity extends AppCompatActivity {
         db = new DatabaseHelper(activity);
 
         getDataFromSQLite();
+
 
 
     }
