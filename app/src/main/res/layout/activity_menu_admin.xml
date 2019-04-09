@@ -90,17 +90,25 @@
             android:layout_weight="1">
 
             <Button
+                android:id="@+id/btnCafeteria"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:text="Cafeteria" />
+
             <Button
+                android:id="@+id/btnMasitas"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:text="Masitas" />
+
             <Button
+                android:id="@+id/btnPersonal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:text="Personal" />
 
         </LinearLayout>
 
@@ -113,17 +121,25 @@
             android:layout_weight="1">
 
             <Button
+                android:id="@+id/btnClientes"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:text="Clientes" />
+
             <Button
+                android:id="@+id/btnVentas"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:text="Ventas" />
+
             <Button
+                android:id="@+id/btnPedidos"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:text="Pedidos" />
 
         </LinearLayout>
 

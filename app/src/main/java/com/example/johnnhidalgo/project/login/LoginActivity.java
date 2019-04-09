@@ -75,23 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_SHORT).show();
                 }
-                /*
 
-            if (databaseHelper.checkUser(textInputEditTextEmail.getText().toString().trim()
-                , textInputEditTextPassword.getText().toString().trim())) {
-
-
-            Intent accountsIntent = new Intent(activity, UsersListActivity.class);
-            accountsIntent.putExtra("EMAIL", textInputEditTextEmail.getText().toString().trim());
-            emptyInputEditText();
-            startActivity(accountsIntent);
-
-
-        } else {
-            // Snack Bar to show success message that record is wrong
-            Snackbar.make(nestedScrollView, getString(R.string.error_valid_email_password), Snackbar.LENGTH_LONG).show();
-        }
-                 */
             }
         });
 

@@ -23,15 +23,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Admin.MenuAdminActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-
         <activity
             android:name=".login.RegisterActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-
+        <activity
+            android:name=".PersonalActivity"
+            android:label="@string/title_activity_personal"></activity>
     </application>
 
 </manifest>
