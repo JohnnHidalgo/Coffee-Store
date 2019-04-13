@@ -111,16 +111,16 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return userList;
     }
 
-    public void updateUser(User user) {
+    public void updateUser(User user,String nombre,String pass) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(COLUMN_USER_NAME, user.getUserName());
-        values.put(COLUMN_USER_PASSWORD, user.getUserPass());
+        values.put(COLUMN_USER_NAME, nombre);
+        values.put(COLUMN_USER_PASSWORD, pass);
 
-        // updating row
-        db.update(TABLE_USER, values, COLUMN_USER_ID + " = ?",
-                new String[]{String.valueOf(user.getIdUser())});
+
+        db.update(TABLE_USER, values, COLUMN_USER_NAME + " = ?",
+                new String[]{String.valueOf(user.getUserName())});
         db.close();
     }
 
@@ -155,13 +155,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         }
         return false;
     }
-
-
-
-
-
-
-
 
 
     public boolean checkUser(String name, String password) {

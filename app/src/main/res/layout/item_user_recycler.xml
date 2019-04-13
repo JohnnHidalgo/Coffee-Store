@@ -64,9 +64,16 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/btnUpdate"
+            android:layout_width="55dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/delete" />
+        <Button
             android:id="@+id/btnDelete"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="8dp"
             android:layout_width="35dp"
             android:layout_height="30dp"
             android:layout_weight="1"

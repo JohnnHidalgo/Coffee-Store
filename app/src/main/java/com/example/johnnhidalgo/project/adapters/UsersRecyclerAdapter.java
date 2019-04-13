@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.johnnhidalgo.project.Database.DatabaseHelper;
@@ -54,7 +56,7 @@ public class UsersRecyclerAdapter extends RecyclerView.Adapter<UsersRecyclerAdap
 
         public AppCompatTextView textViewName;
         public AppCompatTextView textViewPassword;
-        public Button btnDelete;
+        public Button btnDelete,btnUpdate;
 
 
         public UserViewHolder(View view) {
@@ -62,6 +64,7 @@ public class UsersRecyclerAdapter extends RecyclerView.Adapter<UsersRecyclerAdap
             textViewName = (AppCompatTextView) view.findViewById(R.id.textViewName);
             textViewPassword = (AppCompatTextView) view.findViewById(R.id.textViewPassword);
             btnDelete = (Button)view.findViewById(R.id.btnDelete);
+            btnUpdate = (Button)view.findViewById(R.id.btnUpdate);
             db = new DatabaseHelper(view.getContext());
 
 
@@ -70,7 +73,7 @@ public class UsersRecyclerAdapter extends RecyclerView.Adapter<UsersRecyclerAdap
             @Override
             public void onClick(final View v) {
                 AlertDialog.Builder a_builder = new AlertDialog.Builder(v.getContext());
-                a_builder.setMessage("Do you want to Close this App !!!")
+                a_builder.setMessage("Esta seguro de Eliminar este elemento??")
                         .setCancelable(false)
                         .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
                             @Override
@@ -93,8 +96,59 @@ public class UsersRecyclerAdapter extends RecyclerView.Adapter<UsersRecyclerAdap
                 alert.setTitle("Alert !!!");
                 alert.show();
 
-            }
-        });
+                }
+            });
+
+            btnUpdate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    AlertDialog.Builder a_builder = new AlertDialog.Builder(v.getContext());
+                    final EditText nombre = new EditText(v.getContext());
+                    final EditText pass = new EditText(v.getContext());
+                    nombre.setHint("nuevo nombre");
+                    pass.setHint("nuevo password");
+                    LinearLayout ll=new LinearLayout(v.getContext());
+                    ll.setOrientation(LinearLayout.VERTICAL);
+                    ll.addView(nombre);
+                    ll.addView(pass);
+                    a_builder.setView(ll);
+
+
+                    a_builder.setMessage("Esta seguro de cambiar estos datos??")
+                            .setCancelable(false)
+                            .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    String nName= nombre.getText().toString().trim();
+                                    String nPass = pass.getText().toString().trim();
+
+                                    if (!db.checkUser(nName)) {
+                                        User user = new User(textViewName.getText().toString(),textViewPassword.getText().toString());
+                                        db.updateUser(user,nName,nPass);
+
+                                        Toast.makeText(v.getContext(),"Actualizado",Toast.LENGTH_SHORT).show();
+
+                                    }else {
+                                        Toast.makeText(v.getContext(),"Datos invalidos",Toast.LENGTH_SHORT).show();
+                                    }
+
+
+
+
+                                }
+                            })
+                            .setNegativeButton("No",new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            }) ;
+                    AlertDialog alert = a_builder.create();
+                    alert.setTitle("Alert !!!");
+                    alert.show();
+                }
+            });
+
         }
     }
 
