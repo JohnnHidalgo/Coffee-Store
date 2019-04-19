@@ -43,8 +43,13 @@ public class LoginActivity extends AppCompatActivity {
                 String password = passwordLog.getText().toString();
 
 
-
-                if(dbLog.checkUser(username,password)){
+                if(dbLog.checkCliente(username,password)){
+                    Toast.makeText(getApplicationContext(),"Bienvenido",Toast.LENGTH_SHORT).show();
+                    //Cambiar menu de cliente
+                    Intent accountsIntent = new Intent(activity, MenuAdminActivity.class);
+                    startActivity(accountsIntent);
+                }
+                else if(dbLog.checkUser(username,password)){
                     Toast.makeText(getApplicationContext(),"Bienvenido",Toast.LENGTH_SHORT).show();
                     Intent accountsIntent = new Intent(activity, MenuAdminActivity.class);
                     startActivity(accountsIntent);

@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.example.johnnhidalgo.project.Database.DatabaseHelper;
 import com.example.johnnhidalgo.project.R;
 import com.example.johnnhidalgo.project.helpers.InputValidation;
+import com.example.johnnhidalgo.project.modelos.Cliente;
 import com.example.johnnhidalgo.project.modelos.User;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -18,10 +19,11 @@ public class RegisterActivity extends AppCompatActivity {
 
     private final AppCompatActivity activity = RegisterActivity.this;
     DatabaseHelper db;
-    EditText username, password, cpassword;
+    EditText clientename, password, cpassword;
     Button register,login;
     InputValidation inputValidation;
-    User user;
+    Cliente cliente;
+//    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +32,11 @@ public class RegisterActivity extends AppCompatActivity {
 
         db = new DatabaseHelper(activity);
         inputValidation = new InputValidation(activity);
-        user = new User();
-        username= (EditText)findViewById(R.id.username);
-        password = (EditText)findViewById(R.id.password);
-        cpassword = (EditText)findViewById(R.id.cpassword);
-        register = (Button)findViewById(R.id.register);
+        cliente = new Cliente();
+        clientename= (EditText)findViewById(R.id.clientename);
+        password = (EditText)findViewById(R.id.clientepassword);
+        cpassword = (EditText)findViewById(R.id.clientecpassword);
+        register = (Button)findViewById(R.id.clienteregister);
         login = (Button)findViewById(R.id.login);
 
 
@@ -50,22 +52,22 @@ public class RegisterActivity extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String  usernametxt, passwordtxt, cpasswordtxt;
-                usernametxt = username.getText().toString();
+                String  clientenametxt, passwordtxt, cpasswordtxt;
+                clientenametxt = clientename.getText().toString();
                 passwordtxt= password.getText().toString();
                 cpasswordtxt= cpassword.getText().toString();
 
-                if (usernametxt.equals("")||passwordtxt.equals("")||cpasswordtxt.equals("")){
+                if (clientenametxt.equals("")||passwordtxt.equals("")||cpasswordtxt.equals("")){
                     Toast.makeText(getApplicationContext(), "Espacios vacíos", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     if(passwordtxt.equals(cpasswordtxt)){
-                        if (!db.checkUser(usernametxt)) {
+                        if (!db.checkCliente(clientenametxt)) {
 
-                            user.setUserName(usernametxt);
-                            user.setUserPass(passwordtxt);
+                            cliente.setClienteName(clientenametxt);
+                            cliente.setClientePass(passwordtxt);
 
-                            db.addUser(user);
+                            db.addCliente(cliente);
 
 
                             Toast.makeText(getApplicationContext(),"Registro Correcto!",Toast.LENGTH_SHORT).show();
@@ -89,7 +91,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void emptyInputEditText() {
-        username.setText(null);
+        clientename.setText(null);
         password.setText(null);
         cpassword.setText(null);
     }

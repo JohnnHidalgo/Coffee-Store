@@ -7,51 +7,49 @@
     tools:context=".login.RegisterActivity">
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/clientename"
         android:layout_width="179dp"
         android:layout_height="44dp"
+        android:layout_marginTop="156dp"
         android:hint="UserName"
         android:maxLines="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.19"
+        app:layout_constraintHorizontal_bias="0.165"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.397" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/clientepassword"
         android:layout_width="184dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="44dp"
         android:hint="Password"
-        android:maxLines="1"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.195"
+        android:maxLines="1"
+        app:layout_constraintHorizontal_bias="0.17"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username"
-        app:layout_constraintVertical_bias="0.072" />
+        app:layout_constraintTop_toBottomOf="@+id/clientename" />
 
 
     <EditText
-        android:id="@+id/cpassword"
+        android:id="@+id/clientecpassword"
         android:layout_width="184dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
         android:layout_marginTop="8dp"
         android:hint="confrimar pasword"
-        android:maxLines="1"
         android:inputType="textPassword"
+        android:maxLines="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.195"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="0.085" />
+        app:layout_constraintTop_toBottomOf="@+id/clientepassword"
+        app:layout_constraintVertical_bias="0.198" />
 
     <Button
-        android:id="@+id/register"
+        android:id="@+id/clienteregister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
