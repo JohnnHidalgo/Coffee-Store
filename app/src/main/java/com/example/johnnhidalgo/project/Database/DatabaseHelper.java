@@ -57,6 +57,33 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 
 
+/////////////////////////////////
+    //public void insertData(String name, String age, String phone, byte[] image){
+    //
+
+    // Cafeteria table name
+    private static final String TABLE_CAFETERIA = "cafeteria";
+
+    private static final String COLUMN_CAFETERIA_ID = "cafeteria_id";
+    private static final String COLUMN_CAFETERIA_NAME = "cafeteria_name";
+    private static final String COLUMN_CAFETERIA_DESCRPCION = "cafeteria_descripcion";
+    private static final String COLUMN_CAFETERIA_PRECIO = "cafeteria_precio";
+    private static final String COLUMN_CAFETERIA_IMAGEN = "cafeteria_imagen";
+
+
+    private String CREATE_CAFETERIA_TABLE =
+            "CREATE TABLE " + TABLE_CAFETERIA +
+                    "(" + COLUMN_CAFETERIA_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + COLUMN_CAFETERIA_NAME + " TEXT,"
+                    + COLUMN_CAFETERIA_DESCRPCION + " TEXT,"
+                    + COLUMN_CAFETERIA_PRECIO + " DOUBLE,"
+                    + COLUMN_CAFETERIA_IMAGEN + " BLOB"   + ")";
+
+    // drop table sql query
+    private String DROP_CAFETERIA_TABLE = "DROP TABLE IF EXISTS " + TABLE_CAFETERIA;
+
+
+
 
 
 
@@ -70,6 +97,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
         db.execSQL(CREATE_USER_TABLE);
         db.execSQL(CREATE_CLIENTE_TABLE);
+        db.execSQL(CREATE_CAFETERIA_TABLE);
     }
 
     @Override
@@ -78,6 +106,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         //Drop User Table if exist
         db.execSQL(DROP_USER_TABLE);
         db.execSQL(DROP_CLIENTE_TABLE);
+        db.execSQL(DROP_CAFETERIA_TABLE);
 
         // Create tables again
         onCreate(db);
@@ -269,7 +298,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     }
 
 
-    public void updateClienter(Cliente cliente,String nombre,String pass) {
+    public void updateCliente(Cliente cliente,String nombre,String pass) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();

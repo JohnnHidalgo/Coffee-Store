@@ -35,11 +35,12 @@
             android:label="@string/title_activity_personal" />
         <activity android:name=".Admin.modules.Personal.AddPersonalActivity" />
         <activity android:name=".Admin.modules.Cafeteria.CafeteriaActivity" />
-        <activity android:name=".Admin.modules.Cafeteria.AddCafeteriaActivity"></activity>
-
+        <activity android:name=".Admin.modules.Cafeteria.AddCafeteriaActivity" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
+        <activity android:name=".Admin.modules.Clientes.ClientesActivity" />
+        <activity android:name=".Admin.modules.Clientes.AddClientesActivity"></activity>
     </application>
 
 </manifest>

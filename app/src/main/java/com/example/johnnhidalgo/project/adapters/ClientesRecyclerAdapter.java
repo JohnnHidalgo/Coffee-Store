@@ -16,87 +16,82 @@ import android.widget.Toast;
 
 import com.example.johnnhidalgo.project.Database.DatabaseHelper;
 import com.example.johnnhidalgo.project.R;
-import com.example.johnnhidalgo.project.modelos.User;
+import com.example.johnnhidalgo.project.modelos.Cliente;
 
 import java.util.List;
 
-public class UsersRecyclerAdapter extends RecyclerView.Adapter<UsersRecyclerAdapter.UserViewHolder>{
-    private List<User> listUsers;
-    public DatabaseHelper db;
+public class ClientesRecyclerAdapter extends RecyclerView.Adapter<ClientesRecyclerAdapter.ClienteViewHolder>{
+    private List<Cliente> listClientes;
+    private DatabaseHelper db;
 
-    public UsersRecyclerAdapter(List<User> listUsers) {
-        this.listUsers = listUsers;
+    public ClientesRecyclerAdapter(List<Cliente> listCliente) {
+        this.listClientes = listCliente;
     }
-
 
     @NonNull
     @Override
-    public UserViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ClienteViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.item_user_recycler, viewGroup, false);
+                .inflate(R.layout.item_cliente_recycler, viewGroup, false);
 
-        return new UserViewHolder(itemView);
+        return new ClienteViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull UserViewHolder userViewHolder, int position) {
-
-        userViewHolder.textViewName.setText(listUsers.get(position).getUserName());
-        userViewHolder.textViewPassword.setText(listUsers.get(position).getUserPass());
+    public void onBindViewHolder(@NonNull ClienteViewHolder clienteViewHolder, int position) {
+        clienteViewHolder.textViewName.setText(listClientes.get(position).getClienteName());
+        clienteViewHolder.textViewPassword.setText(listClientes.get(position).getClientePass());
     }
 
     @Override
     public int getItemCount() {
-        Log.v(UsersRecyclerAdapter.class.getSimpleName(),""+listUsers.size());
-        return listUsers.size();
+        Log.v(UsersRecyclerAdapter.class.getSimpleName(),""+listClientes.size());
+        return listClientes.size();
     }
 
 
-    public static class UserViewHolder extends RecyclerView.ViewHolder {
+    public class ClienteViewHolder extends RecyclerView.ViewHolder {
 
-        private final DatabaseHelper db;
         public AppCompatTextView textViewName;
         public AppCompatTextView textViewPassword;
         public Button btnDelete,btnUpdate;
 
 
-        public UserViewHolder(View view) {
+        public ClienteViewHolder(View view) {
             super(view);
-            textViewName = (AppCompatTextView) view.findViewById(R.id.textViewName);
-            textViewPassword = (AppCompatTextView) view.findViewById(R.id.textViewPassword);
-            btnDelete = (Button)view.findViewById(R.id.btnDelete);
-            btnUpdate = (Button)view.findViewById(R.id.btnUpdate);
+            textViewName = (AppCompatTextView) view.findViewById(R.id.textViewNameCliente);
+            textViewPassword = (AppCompatTextView) view.findViewById(R.id.textViewPasswordCliente);
+            btnDelete = (Button)view.findViewById(R.id.btnDeleteCliente);
+            btnUpdate = (Button)view.findViewById(R.id.btnUpdateCliente);
             db = new DatabaseHelper(view.getContext());
 
 
-
             btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                AlertDialog.Builder a_builder = new AlertDialog.Builder(v.getContext());
-                a_builder.setMessage("Esta seguro de Eliminar este elemento??")
-                        .setCancelable(false)
-                        .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                @Override
+                public void onClick(final View v) {
+                    AlertDialog.Builder a_builder = new AlertDialog.Builder(v.getContext());
+                    a_builder.setMessage("Esta seguro de Eliminar este elemento??")
+                            .setCancelable(false)
+                            .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
 
-                                User user = new User(textViewName.getText().toString(),textViewPassword.getText().toString());
-                                db.deleteUser(user);
+                                    Cliente cliente = new Cliente(textViewName.getText().toString(),textViewPassword.getText().toString());
+                                    db.deleteCliente(cliente);
 
 
-                                Toast.makeText(v.getContext(),"Eliminado",Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        .setNegativeButton("No",new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        }) ;
-                AlertDialog alert = a_builder.create();
-                alert.setTitle("Alerta !!!");
-                alert.show();
-
+                                    Toast.makeText(v.getContext(),"Eliminado",Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .setNegativeButton("No",new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            }) ;
+                    AlertDialog alert = a_builder.create();
+                    alert.setTitle("Alerta !!!");
+                    alert.show();
                 }
             });
 
@@ -114,7 +109,6 @@ public class UsersRecyclerAdapter extends RecyclerView.Adapter<UsersRecyclerAdap
                     ll.addView(pass);
                     a_builder.setView(ll);
 
-
                     a_builder.setMessage("Esta seguro de cambiar estos datos??")
                             .setCancelable(false)
                             .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
@@ -123,9 +117,10 @@ public class UsersRecyclerAdapter extends RecyclerView.Adapter<UsersRecyclerAdap
                                     String nName= nombre.getText().toString().trim();
                                     String nPass = pass.getText().toString().trim();
 
-                                    if (!db.checkUser(nName)) {
-                                        User user = new User(textViewName.getText().toString(),textViewPassword.getText().toString());
-                                        db.updateUser(user,nName,nPass);
+                                    if (!db.checkCliente(nName)) {
+
+                                        Cliente cliente = new Cliente(textViewName.getText().toString(),textViewPassword.getText().toString());
+                                        db.updateCliente(cliente,nName,nPass);
 
                                         Toast.makeText(v.getContext(),"Actualizado",Toast.LENGTH_SHORT).show();
 
@@ -150,9 +145,9 @@ public class UsersRecyclerAdapter extends RecyclerView.Adapter<UsersRecyclerAdap
                 }
             });
 
+
+
         }
     }
-
-
 
 }
