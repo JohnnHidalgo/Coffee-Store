@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.johnnhidalgo.project.modelos.Cliente;
 import com.example.johnnhidalgo.project.modelos.User;
 
 import java.util.ArrayList;
@@ -36,6 +37,28 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     private String DROP_USER_TABLE = "DROP TABLE IF EXISTS " + TABLE_USER;
 
 
+    // Cliente table name
+    private static final String TABLE_CLIENTE = "cliente";
+
+    private static final String COLUMN_CLIENTE_ID = "cliente_id";
+    private static final String COLUMN_CLIENTE_NAME = "cliente_name";
+    private static final String COLUMN_CLIENTE_PASSWORD = "cliente_password";
+
+
+    // create table sql query
+    private String CREATE_CLIENTE_TABLE =
+            "CREATE TABLE " + TABLE_CLIENTE +
+                    "(" + COLUMN_CLIENTE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + COLUMN_CLIENTE_NAME + " TEXT,"
+                    + COLUMN_CLIENTE_PASSWORD + " TEXT" + ")";
+
+    // drop table sql query
+    private String DROP_CLIENTE_TABLE = "DROP TABLE IF EXISTS " + TABLE_CLIENTE;
+
+
+
+
+
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -46,6 +69,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
 
         db.execSQL(CREATE_USER_TABLE);
+        db.execSQL(CREATE_CLIENTE_TABLE);
     }
 
     @Override
@@ -53,6 +77,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
         //Drop User Table if exist
         db.execSQL(DROP_USER_TABLE);
+        db.execSQL(DROP_CLIENTE_TABLE);
 
         // Create tables again
         onCreate(db);
@@ -170,12 +195,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         // selection arguments
         String[] selectionArgs = {name, password};
 
-        // query user table with conditions
-        /**
-         * Here query function is used to fetch records from user table this function works like we use sql query.
-         * SQL query equivalent to this query function is
-         * SELECT user_id FROM user WHERE user_email = 'jack@androidtutorialshub.com' AND user_password = 'qwerty';
-         */
         Cursor cursor = db.query(TABLE_USER, //Table to query
                 columns,                    //columns to return
                 selection,                  //columns for the WHERE clause
@@ -197,6 +216,136 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 
 
+    public void addCliente(Cliente cliente) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_CLIENTE_NAME, cliente.getClienteName());
+        values.put(COLUMN_CLIENTE_PASSWORD, cliente.getClientePass());
+
+        // Inserting Row
+        db.insert(TABLE_CLIENTE, null, values);
+        db.close();
+    }
+
+
+
+    public List<Cliente> getAllCliente() {
+        // array of columns to fetch
+        String[] columns = {
+                COLUMN_CLIENTE_ID,
+                COLUMN_CLIENTE_NAME,
+                COLUMN_CLIENTE_PASSWORD
+        };
+        // sorting orders
+        String sortOrder =
+                COLUMN_CLIENTE_NAME + " ASC";
+        List<Cliente> clienteList = new ArrayList<Cliente>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_CLIENTE, //Table to query
+                columns,    //columns to return
+                null,        //columns for the WHERE clause
+                null,        //The values for the WHERE clause
+                null,       //group the rows
+                null,       //filter by row groups
+                sortOrder); //The sort order
+
+
+        // Traversing through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Cliente cliente = new Cliente();
+                cliente.setIdCliente(Integer.parseInt(cursor.getString(cursor.getColumnIndex(COLUMN_CLIENTE_ID))));
+                cliente.setClienteName(cursor.getString(cursor.getColumnIndex(COLUMN_CLIENTE_NAME)));
+                cliente.setClientePass(cursor.getString(cursor.getColumnIndex(COLUMN_CLIENTE_PASSWORD)));
+                clienteList.add(cliente);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        return clienteList;
+    }
+
+
+    public void updateClienter(Cliente cliente,String nombre,String pass) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_CLIENTE_NAME, nombre);
+        values.put(COLUMN_CLIENTE_PASSWORD, pass);
+
+        db.update(TABLE_CLIENTE, values, COLUMN_CLIENTE_NAME + " = ?",
+                new String[]{String.valueOf(cliente.getClienteName())});
+        db.close();
+    }
+
+    public void deleteCliente(Cliente cliente) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_CLIENTE, COLUMN_CLIENTE_NAME + " = ?",
+                new String[]{String.valueOf(cliente.getClienteName())});
+        db.close();
+    }
+
+
+
+    public boolean checkCliente(String clientename) {
+        String[] columns = {
+                COLUMN_CLIENTE_ID
+        };
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selection = COLUMN_CLIENTE_NAME + " = ?";
+        String[] selectionArgs = {clientename};
+        Cursor cursor = db.query(TABLE_CLIENTE, //Table to query
+                columns,                    //columns to return
+                selection,                  //columns for the WHERE clause
+                selectionArgs,              //The values for the WHERE clause
+                null,                       //group the rows
+                null,                      //filter by row groups
+                null);                      //The sort order
+        int cursorCount = cursor.getCount();
+        cursor.close();
+        db.close();
+
+        if (cursorCount > 0) {
+            return true;
+        }
+        return false;
+    }
+
+
+    public boolean checkCliente(String name, String password) {
+
+        // array of columns to fetch
+        String[] columns = {
+                COLUMN_CLIENTE_ID
+        };
+        SQLiteDatabase db = this.getReadableDatabase();
+        // selection criteria
+        String selection = COLUMN_CLIENTE_NAME + " = ?" + " AND " + COLUMN_CLIENTE_PASSWORD + " = ?";
+
+        // selection arguments
+        String[] selectionArgs = {name, password};
+
+        Cursor cursor = db.query(TABLE_CLIENTE, //Table to query
+                columns,                    //columns to return
+                selection,                  //columns for the WHERE clause
+                selectionArgs,              //The values for the WHERE clause
+                null,                       //group the rows
+                null,                       //filter by row groups
+                null);                      //The sort order
+
+        int cursorCount = cursor.getCount();
+
+        cursor.close();
+        db.close();
+        if (cursorCount > 0) {
+            return true;
+        }
+
+        return false;
+    }
 
 
 

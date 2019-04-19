@@ -5,6 +5,10 @@ public class Cliente {
     String clienteName;
     String clientePass;
 
+    public Cliente(){
+
+    }
+
     public Cliente(int idCliente, String clienteName, String clientePass) {
         this.idCliente = idCliente;
         this.clienteName = clienteName;
