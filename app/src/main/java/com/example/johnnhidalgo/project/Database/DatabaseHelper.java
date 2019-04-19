@@ -328,7 +328,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         // selection arguments
         String[] selectionArgs = {name, password};
 
-        Cursor cursor = db.query(TABLE_USER, //Table to query
+        Cursor cursor = db.query(TABLE_CLIENTE, //Table to query
                 columns,                    //columns to return
                 selection,                  //columns for the WHERE clause
                 selectionArgs,              //The values for the WHERE clause
