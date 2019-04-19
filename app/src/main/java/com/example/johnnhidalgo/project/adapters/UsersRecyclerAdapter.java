@@ -93,7 +93,7 @@ public class UsersRecyclerAdapter extends RecyclerView.Adapter<UsersRecyclerAdap
                             }
                         }) ;
                 AlertDialog alert = a_builder.create();
-                alert.setTitle("Alert !!!");
+                alert.setTitle("Alerta !!!");
                 alert.show();
 
                 }
@@ -144,7 +144,7 @@ public class UsersRecyclerAdapter extends RecyclerView.Adapter<UsersRecyclerAdap
                                 }
                             }) ;
                     AlertDialog alert = a_builder.create();
-                    alert.setTitle("Alert !!!");
+                    alert.setTitle("Alerta !!!");
                     alert.show();
                 }
             });
