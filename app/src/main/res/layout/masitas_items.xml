@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imgMasitas"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
+
+    <TextView
+        android:id="@+id/txtNameMasitas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imgMasitas"
+        android:text="Food name"
+        android:textAlignment="center"
+        android:textColor="#0e11d1"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/txtPriceMasitas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/txtNameMasitas"
+        android:text="PriceMasitas"
+        android:textAlignment="center"
+        android:textColor="#ce1309"
+        android:textSize="17sp" />
+
+
+</RelativeLayout>

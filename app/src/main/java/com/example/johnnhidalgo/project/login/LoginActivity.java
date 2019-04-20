@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.johnnhidalgo.project.Admin.MenuAdminActivity;
+import com.example.johnnhidalgo.project.Cliente.MenuClienteActivity;
 import com.example.johnnhidalgo.project.Database.DatabaseHelper;
 import com.example.johnnhidalgo.project.R;
 
@@ -46,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(dbLog.checkCliente(username,password)){
                     Toast.makeText(getApplicationContext(),"Bienvenido",Toast.LENGTH_SHORT).show();
                     //Cambiar menu de cliente
-                    Intent accountsIntent = new Intent(activity, MenuAdminActivity.class);
+                    Intent accountsIntent = new Intent(activity, MenuClienteActivity.class);
                     startActivity(accountsIntent);
                 }
                 else if(dbLog.checkUser(username,password)){
