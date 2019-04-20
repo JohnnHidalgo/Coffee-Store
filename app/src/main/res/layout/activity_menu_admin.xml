@@ -4,69 +4,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Admin.MenuAdminActivity">
+    tools:context=".Admin.MenuAdminActivity"
+    android:background="#300a02">
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="262dp"
+        android:layout_height="241dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.057"
-        app:srcCompat="@color/colorAccent" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="209dp"
-        android:layout_height="47dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Johnn's Coffe"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.083"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.402" />
+        app:layout_constraintVertical_bias="0.09" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="66dp"
-        android:layout_height="32dp"
+        android:layout_width="83dp"
+        android:layout_height="45dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="menu"
-        android:textSize="20sp"
+        android:text="Menú"
+        android:textColor="@color/primary_light"
+        android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.105"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499" />
+        app:layout_constraintVertical_bias="0.466" />
 
 
     <LinearLayout
 
-        android:background="#48eca2"
+        android:background="@color/colorAccent"
         android:layout_width="match_parent"
-        android:layout_height="254dp"
+        android:layout_height="270dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
@@ -80,66 +63,170 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        android:weightSum="2">
+        android:weightSum="6">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="44dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
             android:orientation="horizontal"
-            android:weightSum="3"
-            android:layout_weight="1">
+            android:weightSum="3">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="32dp"
+                android:background="@color/primary_light"
+                android:text="Cafeteria" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="32dp"
+                android:background="@color/primary_light"
+                android:layout_weight="1"
+                android:text="Masitas" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="32dp"
+                android:background="@color/primary_light"
+                android:layout_weight="1"
+                android:text="Personal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="151dp"
+            android:layout_weight="2"
+            android:orientation="horizontal"
+            android:weightSum="3">
 
             <Button
                 android:id="@+id/btnCafeteria"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="32dp"
+                android:layout_marginBottom="32dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:layout_marginTop="32dp"
                 android:layout_weight="1"
-                android:text="Cafeteria" />
+                android:background="@drawable/cup"
+                android:backgroundTint="@color/divider"/>
 
             <Button
                 android:id="@+id/btnMasitas"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="32dp"
+                android:layout_marginBottom="32dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:layout_marginTop="32dp"
                 android:layout_weight="1"
-                android:text="Masitas" />
+                android:background="@drawable/bread"
+                android:backgroundTint="@color/divider"/>
 
             <Button
                 android:id="@+id/btnPersonal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="32dp"
+                android:layout_marginBottom="32dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:layout_marginTop="32dp"
                 android:layout_weight="1"
-                android:text="Personal" />
+                android:background="@drawable/adduser"
+                android:backgroundTint="@color/divider"/>
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:layout_gravity="center_horizontal">
 
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="32dp"
+                android:layout_weight="1"
+                android:text="Clientes"
+                android:background="@color/primary_light"
+                android:layout_gravity="center_horizontal"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="32dp"
+                android:layout_weight="1"
+                android:text="Ventas"
+                android:background="@color/primary_light"
+                android:layout_gravity="center_horizontal"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="32dp"
+                android:layout_weight="1"
+                android:text="Pedidos"
+                android:background="@color/primary_light"
+                android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="151dp"
+            android:layout_weight="2"
             android:orientation="horizontal"
-            android:weightSum="3"
-            android:layout_weight="1">
+            android:weightSum="3">
 
             <Button
                 android:id="@+id/btnClientes"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="32dp"
+                android:layout_marginBottom="32dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:layout_marginTop="32dp"
                 android:layout_weight="1"
-                android:text="Clientes" />
+                android:background="@drawable/adduser"
+                android:backgroundTint="@color/divider"/>
 
             <Button
                 android:id="@+id/btnVentas"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="32dp"
+                android:layout_marginBottom="32dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:layout_marginTop="32dp"
                 android:layout_weight="1"
-                android:text="Ventas" />
+                android:background="@drawable/cooking"
+                android:backgroundTint="@color/divider"/>
 
             <Button
                 android:id="@+id/btnPedidos"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="32dp"
+                android:layout_marginBottom="32dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:layout_marginTop="32dp"
                 android:layout_weight="1"
-                android:text="Pedidos" />
+                android:background="@drawable/addcoffe"
+                android:backgroundTint="@color/divider"/>
 
         </LinearLayout>
 
