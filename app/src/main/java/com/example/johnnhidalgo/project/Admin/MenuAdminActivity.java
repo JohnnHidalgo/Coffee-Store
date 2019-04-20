@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.johnnhidalgo.project.Admin.modules.Cafeteria.CafeteriaActivity;
 import com.example.johnnhidalgo.project.Admin.modules.Clientes.ClientesActivity;
 import com.example.johnnhidalgo.project.Admin.modules.Personal.PersonalActivity;
 import com.example.johnnhidalgo.project.R;
@@ -43,13 +42,13 @@ public class MenuAdminActivity extends AppCompatActivity {
             }
         });
 
-        btnCafeteria.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent accountsIntent = new Intent(getApplicationContext(), CafeteriaActivity.class);
-                startActivity(accountsIntent);
-            }
-        });
+//        btnCafeteria.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent accountsIntent = new Intent(getApplicationContext(), CafeteriaActivity.class);
+//                startActivity(accountsIntent);
+//            }
+//        });
 
 
     }
