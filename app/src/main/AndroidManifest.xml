@@ -42,7 +42,7 @@
         <activity android:name=".Admin.modules.Clientes.ClientesActivity" />
         <activity android:name=".Admin.modules.Clientes.AddClientesActivity" />
         <activity android:name=".Admin.modules.Food.AddFoodActivity" />
-        <activity android:name=".FoodList"></activity>
+        <activity android:name=".Admin.modules.Food.FoodList"></activity>
     </application>
 
 </manifest>

@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.johnnhidalgo.project.Database.DatabaseHelper;
-import com.example.johnnhidalgo.project.FoodList;
 import com.example.johnnhidalgo.project.R;
 
 import java.io.ByteArrayOutputStream;

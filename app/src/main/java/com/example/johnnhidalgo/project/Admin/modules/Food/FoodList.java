@@ -1,4 +1,4 @@
-package com.example.johnnhidalgo.project;
+package com.example.johnnhidalgo.project.Admin.modules.Food;
 
 import android.Manifest;
 import android.app.Activity;
@@ -25,10 +25,8 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.johnnhidalgo.project.Admin.modules.Food.AddFoodActivity;
-import com.example.johnnhidalgo.project.Admin.modules.Personal.AddPersonalActivity;
-import com.example.johnnhidalgo.project.Admin.modules.Personal.PersonalActivity;
 import com.example.johnnhidalgo.project.Database.DatabaseHelper;
+import com.example.johnnhidalgo.project.R;
 import com.example.johnnhidalgo.project.adapters.FoodListAdapter;
 import com.example.johnnhidalgo.project.modelos.Food;
 

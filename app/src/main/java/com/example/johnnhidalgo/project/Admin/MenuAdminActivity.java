@@ -8,9 +8,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.johnnhidalgo.project.Admin.modules.Clientes.ClientesActivity;
-import com.example.johnnhidalgo.project.Admin.modules.Food.AddFoodActivity;
 import com.example.johnnhidalgo.project.Admin.modules.Personal.PersonalActivity;
-import com.example.johnnhidalgo.project.FoodList;
+import com.example.johnnhidalgo.project.Admin.modules.Food.FoodList;
 import com.example.johnnhidalgo.project.R;
 
 public class MenuAdminActivity extends AppCompatActivity {
