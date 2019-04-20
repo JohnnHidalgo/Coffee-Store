@@ -8,7 +8,9 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.johnnhidalgo.project.Admin.modules.Clientes.ClientesActivity;
+import com.example.johnnhidalgo.project.Admin.modules.Food.AddFoodActivity;
 import com.example.johnnhidalgo.project.Admin.modules.Personal.PersonalActivity;
+import com.example.johnnhidalgo.project.FoodList;
 import com.example.johnnhidalgo.project.R;
 
 public class MenuAdminActivity extends AppCompatActivity {
@@ -42,13 +44,13 @@ public class MenuAdminActivity extends AppCompatActivity {
             }
         });
 
-//        btnCafeteria.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent accountsIntent = new Intent(getApplicationContext(), CafeteriaActivity.class);
-//                startActivity(accountsIntent);
-//            }
-//        });
+        btnCafeteria.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent accountsIntent = new Intent(getApplicationContext(), FoodList.class);
+                startActivity(accountsIntent);
+            }
+        });
 
 
     }

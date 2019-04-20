@@ -58,6 +58,30 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 
 
+    private static final String TABLE_CAFETERIA = "cafeteria";
+
+
+    private static final String COLUMN_CAFETERIA_ID = "cafeteria_id";
+    private static final String COLUMN_CAFETERIA_NAME = "cafeteria_name";
+    private static final String COLUMN_CAFETERIA_PRICE = "cafeteria_price";
+    private static final String COLUMN_CAFETERIA_IMAGEN = "cafeteria_imagen";
+
+
+    // create table sql query
+    private String CREATE_CAFETERIA_TABLE =
+            "CREATE TABLE " + TABLE_CAFETERIA +
+                    "(" + COLUMN_CAFETERIA_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + COLUMN_CAFETERIA_NAME + " VARCHAR,"
+                    + COLUMN_CAFETERIA_PRICE + " VARCHAR,"
+                    + COLUMN_CAFETERIA_IMAGEN + " BLOB" + ")";
+
+    // drop table sql query
+    private String DROP_CAFETERIA_TABLE = "DROP TABLE IF EXISTS " + TABLE_CAFETERIA;
+
+
+
+
+
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -69,7 +93,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
         db.execSQL(CREATE_USER_TABLE);
         db.execSQL(CREATE_CLIENTE_TABLE);
-//        db.execSQL(CREATE_CAFETERIA_TABLE);
+        db.execSQL(CREATE_CAFETERIA_TABLE);
     }
 
     @Override
@@ -77,7 +101,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
         db.execSQL(DROP_USER_TABLE);
         db.execSQL(DROP_CLIENTE_TABLE);
-//        db.execSQL(DROP_CAFETERIA_TABLE);
+        db.execSQL(DROP_CAFETERIA_TABLE);
         // Create tables again
         onCreate(db);
 
@@ -344,6 +368,57 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
         return false;
     }
+
+
+
+
+    public void insertData(String name, String price, byte[] image){
+        SQLiteDatabase database = getWritableDatabase();
+        String sql = "INSERT INTO "+TABLE_CAFETERIA+" VALUES (NULL, ?, ?, ?)";
+
+        SQLiteStatement statement = database.compileStatement(sql);
+        statement.clearBindings();
+
+        statement.bindString(1, name);
+        statement.bindString(2, price);
+        statement.bindBlob(3, image);
+
+        statement.executeInsert();
+    }
+
+    public void updateData(String name, String price, byte[] image, int id) {
+        SQLiteDatabase database = getWritableDatabase();
+
+        String sql = "UPDATE "+TABLE_CAFETERIA+" SET name = ?, price = ?, image = ? WHERE id = ?";
+        SQLiteStatement statement = database.compileStatement(sql);
+
+        statement.bindString(1, name);
+        statement.bindString(2, price);
+        statement.bindBlob(3, image);
+        statement.bindDouble(4, (double)id);
+
+        statement.execute();
+        database.close();
+    }
+
+    public  void deleteData(int id) {
+        SQLiteDatabase database = getWritableDatabase();
+
+        String sql = "DELETE FROM "+TABLE_CAFETERIA+" WHERE id = ?";
+        SQLiteStatement statement = database.compileStatement(sql);
+        statement.clearBindings();
+        statement.bindDouble(1, (double)id);
+
+        statement.execute();
+        database.close();
+    }
+
+    public Cursor getData(String sql){
+        SQLiteDatabase database = getReadableDatabase();
+        return database.rawQuery(sql, null);
+    }
+
+
 
 
 }

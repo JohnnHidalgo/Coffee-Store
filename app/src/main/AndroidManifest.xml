@@ -40,7 +40,9 @@
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".Admin.modules.Clientes.ClientesActivity" />
-        <activity android:name=".Admin.modules.Clientes.AddClientesActivity"></activity>
+        <activity android:name=".Admin.modules.Clientes.AddClientesActivity" />
+        <activity android:name=".Admin.modules.Food.AddFoodActivity" />
+        <activity android:name=".FoodList"></activity>
     </application>
 
 </manifest>
