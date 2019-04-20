@@ -82,6 +82,27 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 
 
+    private static final String TABLE_MASITAS = "masitas";
+
+
+    private static final String COLUMN_MASITAS_ID = "masitas_id";
+    private static final String COLUMN_MASITAS_NAME = "masitas_name";
+    private static final String COLUMN_MASITAS_PRICE = "masitas_price";
+    private static final String COLUMN_MASITAS_IMAGEN = "masitas_imagen";
+
+
+    // create table sql query
+    private String CREATE_MASITAS_TABLE =
+            "CREATE TABLE " + TABLE_MASITAS +
+                    "(" + COLUMN_MASITAS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + COLUMN_MASITAS_NAME + " VARCHAR,"
+                    + COLUMN_MASITAS_PRICE + " VARCHAR,"
+                    + COLUMN_MASITAS_IMAGEN + " BLOB" + ")";
+
+    // drop table sql query
+    private String DROP_MASITAS_TABLE = "DROP TABLE IF EXISTS " + TABLE_MASITAS;
+
+
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -94,6 +115,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         db.execSQL(CREATE_USER_TABLE);
         db.execSQL(CREATE_CLIENTE_TABLE);
         db.execSQL(CREATE_CAFETERIA_TABLE);
+        db.execSQL(CREATE_MASITAS_TABLE);
     }
 
     @Override
@@ -102,6 +124,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         db.execSQL(DROP_USER_TABLE);
         db.execSQL(DROP_CLIENTE_TABLE);
         db.execSQL(DROP_CAFETERIA_TABLE);
+        db.execSQL(DROP_MASITAS_TABLE);
         // Create tables again
         onCreate(db);
 
@@ -417,6 +440,56 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         SQLiteDatabase database = getReadableDatabase();
         return database.rawQuery(sql, null);
     }
+
+
+
+
+    public void insertDataMasita(String name, String price, byte[] image){
+        SQLiteDatabase database = getWritableDatabase();
+        String sql = "INSERT INTO "+TABLE_MASITAS+" VALUES (NULL, ?, ?, ?)";
+
+        SQLiteStatement statement = database.compileStatement(sql);
+        statement.clearBindings();
+
+        statement.bindString(1, name);
+        statement.bindString(2, price);
+        statement.bindBlob(3, image);
+
+        statement.executeInsert();
+    }
+
+    public void updateDataMasitas(String name, String price, byte[] image, int id) {
+        SQLiteDatabase database = getWritableDatabase();
+
+        String sql = "UPDATE "+TABLE_MASITAS+" SET name = ?, price = ?, image = ? WHERE id = ?";
+        SQLiteStatement statement = database.compileStatement(sql);
+
+        statement.bindString(1, name);
+        statement.bindString(2, price);
+        statement.bindBlob(3, image);
+        statement.bindDouble(4, (double)id);
+
+        statement.execute();
+        database.close();
+    }
+
+    public  void deleteDataMasitas(int id) {
+        SQLiteDatabase database = getWritableDatabase();
+
+        String sql = "DELETE FROM "+TABLE_MASITAS+" WHERE id = ?";
+        SQLiteStatement statement = database.compileStatement(sql);
+        statement.clearBindings();
+        statement.bindDouble(1, (double)id);
+
+        statement.execute();
+        database.close();
+    }
+
+    public Cursor getDataMasitas(String sql){
+        SQLiteDatabase database = getReadableDatabase();
+        return database.rawQuery(sql, null);
+    }
+
 
 
 
