@@ -127,7 +127,7 @@ public class MasitasList extends AppCompatActivity {
         dialog.setContentView(R.layout.update_masita_activity);
         dialog.setTitle("Update");
 
-        imageViewMasitas = (ImageView) dialog.findViewById(R.id.imageViewMasitas);
+        imageViewMasitas = (ImageView) dialog.findViewById(R.id.imageViewMasita);
         final EditText edtName = (EditText) dialog.findViewById(R.id.edtNameMasita);
         final EditText edtPrice = (EditText) dialog.findViewById(R.id.edtPriceMasita);
         Button btnUpdate = (Button) dialog.findViewById(R.id.btnUpdateMasita);
@@ -155,7 +155,7 @@ public class MasitasList extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    AddFoodActivity.sqLiteHelper.updateDataMasitas(
+                    db.updateDataMasitas(
                             edtName.getText().toString().trim(),
                             edtPrice.getText().toString().trim(),
                             AddFoodActivity.imageViewToByte(imageViewMasitas),
@@ -181,7 +181,7 @@ public class MasitasList extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 try {
-                    AddFoodActivity.sqLiteHelper.deleteDataMasitas(idMasita);
+                    db.deleteDataMasitas(idMasita);
                     Toast.makeText(getApplicationContext(), "Delete successfully!!!",Toast.LENGTH_SHORT).show();
                 } catch (Exception e){
                     Log.e("error", e.getMessage());
@@ -202,7 +202,7 @@ public class MasitasList extends AppCompatActivity {
 
     private void updateMasitasList(){
         // get all data from sqlite
-        Cursor cursor = AddFoodActivity.sqLiteHelper.getDataMasitas("SELECT * FROM masitas");
+        Cursor cursor = db.getDataMasitas("SELECT * FROM masitas");
         list.clear();
         while (cursor.moveToNext()) {
             int id = cursor.getInt(0);

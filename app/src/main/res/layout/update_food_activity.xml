@@ -7,12 +7,12 @@
     android:layout_height="match_parent">
 
     <EditText
+        android:id="@+id/edtPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:hint="Price"
         android:ems="10"
-        android:id="@+id/edtPrice"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
