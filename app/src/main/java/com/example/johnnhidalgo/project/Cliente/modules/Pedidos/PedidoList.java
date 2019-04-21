@@ -161,21 +161,24 @@ public class PedidoList extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         String Tcantidad= cantidad.getText().toString().trim();
+                        String message;
+                        int cant;
+                        int idCafeteria;
 
+                        cant = Integer.parseInt(Tcantidad);
 
-
-                        Cursor c = db.getData("SELECT id FROM cafeteria");
+                        Cursor c = db.getData("SELECT cafeteria_id FROM cafeteria");
                         ArrayList<Integer> arrID = new ArrayList<Integer>();
                         while (c.moveToNext()){
                             arrID.add(c.getInt(0));
                         }
-//                        showDialogUpdate(FoodList.this, arrID.get(position));
+                        message = arrID.get(position).toString();
+
+                        idCafeteria = arrID.get(position);
+                        Toast.makeText(v.getContext(),message,Toast.LENGTH_SHORT).show();
 
 
-
-                        Toast.makeText(v.getContext(),arrID.get(position),Toast.LENGTH_SHORT).show();
-
-//                                    PedidoCafeteria pedidoCafeteria = new PedidoCafeteria(listFood.);
+                        PedidoCafeteria pedidoCafeteria = new PedidoCafeteria(idCafeteria,cant);
                     }
                 });
 
