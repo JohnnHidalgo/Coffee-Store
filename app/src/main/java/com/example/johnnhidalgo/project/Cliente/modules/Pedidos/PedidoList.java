@@ -49,7 +49,7 @@ public class PedidoList extends AppCompatActivity {
     FoodListAdapter adapterFood = null;
     MasitaListAdapter adapterMasitas = null;
 
-    DatabaseHelper db;
+    public static DatabaseHelper db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -161,7 +161,6 @@ public class PedidoList extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         String Tcantidad= cantidad.getText().toString().trim();
-                        String message;
                         int cant;
                         int idCafeteria;
 
@@ -172,16 +171,22 @@ public class PedidoList extends AppCompatActivity {
                         while (c.moveToNext()){
                             arrID.add(c.getInt(0));
                         }
-                        message = arrID.get(position).toString();
 
                         idCafeteria = arrID.get(position);
-                        Toast.makeText(v.getContext(),message,Toast.LENGTH_SHORT).show();
+                        try{
+                            db.insertPedido(
+                                    idCafeteria,
+                                    cant
+                            );
+                            Toast.makeText(getApplicationContext(), "Added successfully!", Toast.LENGTH_SHORT).show();
+                            cantidad.setText("");
+                        }
+                        catch (Exception e){
+                            e.printStackTrace();
+                        }
 
-
-                        PedidoCafeteria pedidoCafeteria = new PedidoCafeteria(idCafeteria,cant);
                     }
                 });
-
 
                 dialog.show();
                 return true;

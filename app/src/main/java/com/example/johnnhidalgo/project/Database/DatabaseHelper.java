@@ -528,7 +528,7 @@ FOREIGN KEY (idser) REFERENCES servicio(idser)
 
     public void insertPedido(int idCafeteria, int cantidad){
         SQLiteDatabase database = getWritableDatabase();
-        String sql = "INSERT INTO "+TABLE_PEDIDO+" VALUES (NULL, ?, ?, ?)";
+        String sql = "INSERT INTO "+TABLE_PEDIDO+" VALUES (NULL, ?, ?)";
 
         SQLiteStatement statement = database.compileStatement(sql);
         statement.clearBindings();
@@ -551,6 +551,13 @@ FOREIGN KEY (idser) REFERENCES servicio(idser)
         statement.execute();
         database.close();
     }
+
+    public Cursor getDataPedido(String sql){
+        SQLiteDatabase database = getReadableDatabase();
+        return database.rawQuery(sql, null);
+    }
+
+
 
 
 }
