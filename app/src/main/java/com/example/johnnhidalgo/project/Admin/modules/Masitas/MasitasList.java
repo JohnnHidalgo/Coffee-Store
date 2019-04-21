@@ -94,7 +94,7 @@ public class MasitasList extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int item) {
                         if (item == 0) {
                             // update
-                            Cursor c = db.getDataMasitas("SELECT id FROM masitas");
+                            Cursor c = db.getDataMasitas("SELECT masitas_id FROM masitas");
                             ArrayList<Integer> arrID = new ArrayList<Integer>();
                             while (c.moveToNext()){
                                 arrID.add(c.getInt(0));
@@ -104,7 +104,7 @@ public class MasitasList extends AppCompatActivity {
 
                         } else {
                             // delete
-                            Cursor c = db.getDataMasitas("SELECT id FROM masitas");
+                            Cursor c = db.getDataMasitas("SELECT masitas_id FROM masitas");
                             ArrayList<Integer> arrID = new ArrayList<Integer>();
                             while (c.moveToNext()){
                                 arrID.add(c.getInt(0));
