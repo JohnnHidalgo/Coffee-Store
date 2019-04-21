@@ -29,6 +29,7 @@ import com.example.johnnhidalgo.project.Database.DatabaseHelper;
 import com.example.johnnhidalgo.project.R;
 import com.example.johnnhidalgo.project.adapters.FoodListAdapter;
 import com.example.johnnhidalgo.project.modelos.Food;
+import com.example.johnnhidalgo.project.modelos.Masitas;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -75,7 +76,6 @@ public class FoodList extends AppCompatActivity {
             list.add(new Food(name, price, image, id));
         }
 
-
         adapter.notifyDataSetChanged();
 
         gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -91,7 +91,7 @@ public class FoodList extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int item) {
                         if (item == 0) {
                             // update
-                            Cursor c = db.getData("SELECT id FROM cafeteria");
+                            Cursor c = db.getData("SELECT cafeteria_id FROM cafeteria");
                             ArrayList<Integer> arrID = new ArrayList<Integer>();
                             while (c.moveToNext()){
                                 arrID.add(c.getInt(0));
@@ -101,7 +101,7 @@ public class FoodList extends AppCompatActivity {
 
                         } else {
                             // delete
-                            Cursor c = db.getData("SELECT id FROM cafeteria");
+                            Cursor c = db.getData("SELECT cafeteria_id FROM cafeteria");
                             ArrayList<Integer> arrID = new ArrayList<Integer>();
                             while (c.moveToNext()){
                                 arrID.add(c.getInt(0));
@@ -152,7 +152,7 @@ public class FoodList extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    AddFoodActivity.sqLiteHelper.updateData(
+                    db.updateData(
                             edtName.getText().toString().trim(),
                             edtPrice.getText().toString().trim(),
                             AddFoodActivity.imageViewToByte(imageViewFood),
@@ -178,12 +178,12 @@ public class FoodList extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 try {
-                    AddFoodActivity.sqLiteHelper.deleteData(idFood);
+                    db.deleteData(idFood);
                     Toast.makeText(getApplicationContext(), "Delete successfully!!!",Toast.LENGTH_SHORT).show();
                 } catch (Exception e){
                     Log.e("error", e.getMessage());
                 }
-                updateFoodList();
+//                updateFoodList();
             }
         });
 
@@ -198,7 +198,7 @@ public class FoodList extends AppCompatActivity {
 
     private void updateFoodList(){
         // get all data from sqlite
-        Cursor cursor = AddFoodActivity.sqLiteHelper.getData("SELECT * FROM cafeteria");
+        Cursor cursor = db.getData("SELECT * FROM cafeteria");
         list.clear();
         while (cursor.moveToNext()) {
             int id = cursor.getInt(0);

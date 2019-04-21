@@ -101,7 +101,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
     // drop table sql query
     private String DROP_MASITAS_TABLE = "DROP TABLE IF EXISTS " + TABLE_MASITAS;
-
+    private SQLiteDatabase database;
 
 
     public DatabaseHelper(Context context) {
@@ -440,8 +440,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         SQLiteDatabase database = getReadableDatabase();
         return database.rawQuery(sql, null);
     }
-
-
 
 
     public void insertDataMasita(String name, String price, byte[] image){

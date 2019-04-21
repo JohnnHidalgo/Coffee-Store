@@ -14,8 +14,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.johnnhidalgo.project.Admin.modules.Food.FoodList;
@@ -24,8 +27,11 @@ import com.example.johnnhidalgo.project.Database.DatabaseHelper;
 import com.example.johnnhidalgo.project.R;
 import com.example.johnnhidalgo.project.adapters.FoodListAdapter;
 import com.example.johnnhidalgo.project.adapters.MasitaListAdapter;
+import com.example.johnnhidalgo.project.modelos.Cliente;
 import com.example.johnnhidalgo.project.modelos.Food;
 import com.example.johnnhidalgo.project.modelos.Masitas;
+import com.example.johnnhidalgo.project.modelos.PedidoCafeteria;
+import com.example.johnnhidalgo.project.modelos.PedidoMasita;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -37,6 +43,8 @@ public class PedidoList extends AppCompatActivity {
 
     ArrayList<Food> listFood;
     ArrayList<Masitas> listMasitas;
+    ArrayList<PedidoCafeteria> listaPedidoCafeteria;
+    ArrayList<PedidoMasita> listaPedidoMasita;
 
     FoodListAdapter adapterFood = null;
     MasitaListAdapter adapterMasitas = null;
@@ -56,21 +64,17 @@ public class PedidoList extends AppCompatActivity {
         adapterFood = new FoodListAdapter(this, R.layout.food_items, listFood);
         adapterMasitas = new MasitaListAdapter(this, R.layout.masitas_items, listMasitas);
 
-
         gridViewCafeteria.setAdapter(adapterFood);
         gridViewMasitas.setAdapter(adapterMasitas);
 
         db = new DatabaseHelper(getApplicationContext());
 
-
         // get all data from sqlite
-        Cursor cursorCafeteria = db.getDataMasitas("SELECT * FROM cafeteria");
-        Cursor cursorMasitas = db.getDataMasitas("SELECT * FROM masitas");
+        final Cursor cursorCafeteria = db.getDataMasitas("SELECT * FROM cafeteria");
+        final Cursor cursorMasitas = db.getDataMasitas("SELECT * FROM masitas");
 
         listFood.clear();
         listMasitas.clear();
-
-
 
         while (cursorCafeteria.moveToNext()) {
             int id = cursorCafeteria.getInt(0);
@@ -80,6 +84,7 @@ public class PedidoList extends AppCompatActivity {
 
             listFood.add(new Food(name, price, image, id));
         }
+
         while (cursorMasitas.moveToNext()) {
             int id = cursorMasitas.getInt(0);
             String name = cursorMasitas.getString(1);
@@ -92,38 +97,89 @@ public class PedidoList extends AppCompatActivity {
         adapterFood.notifyDataSetChanged();
         adapterMasitas.notifyDataSetChanged();
 
+
+//        gridViewCafeteria.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(final View v) {
+//                android.app.AlertDialog.Builder a_builder = new android.app.AlertDialog.Builder(v.getContext());
+//                final EditText cantidad = new EditText(v.getContext());
+//                cantidad.setHint("Cantidad");
+//                LinearLayout ll=new LinearLayout(v.getContext());
+//                ll.setOrientation(LinearLayout.VERTICAL);
+//                ll.addView(cantidad);
+//                a_builder.setView(ll);
+//
+//                a_builder.setMessage("Denote la cantidad que desea ordenar")
+//                        .setCancelable(false)
+//                        .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                String nName= cantidad.getText().toString().trim();
+//                                listFood.get(0);
+//
+//                                Toast.makeText(v.getContext(),listFood.get(0).getId(),Toast.LENGTH_SHORT).show();
+//
+////                                    PedidoCafeteria pedidoCafeteria = new PedidoCafeteria(listFood.);
+////                                    Cliente cliente = new Cliente(textViewName.getText().toString(),textViewPassword.getText().toString());
+////                                    db.updateCliente(cliente,nName,nPass);
+//                                    Toast.makeText(v.getContext(),"Actualizado",Toast.LENGTH_SHORT).show();
+//
+//                            }
+//                        })
+//                        .setNegativeButton("No",new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                dialog.cancel();
+//                            }
+//                        }) ;
+//                android.app.AlertDialog alert = a_builder.create();
+//                alert.setTitle("Alerta !!!");
+//                alert.show();
+//            }
+//        });
+
         gridViewCafeteria.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
 
-                CharSequence[] items = {"Update", "Delete"};
                 AlertDialog.Builder dialog = new AlertDialog.Builder(PedidoList.this);
 
-                dialog.setTitle("Choose an action");
-                dialog.setItems(items, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int item) {
-                        if (item == 0) {
-                            // update
-                            Cursor c = db.getData("SELECT id FROM cafeteria");
-                            ArrayList<Integer> arrID = new ArrayList<Integer>();
-                            while (c.moveToNext()){
-                                arrID.add(c.getInt(0));
-                            }
-                            // show dialog update at here
-//                            showDialogUpdate(PedidoList.this, arrID.get(position));
+                final EditText cantidad = new EditText(view.getContext());
+                final Button pedido = new Button(view.getContext());
 
-                        } else {
-                            // delete
-                            Cursor c = db.getData("SELECT id FROM cafeteria");
-                            ArrayList<Integer> arrID = new ArrayList<Integer>();
-                            while (c.moveToNext()){
-                                arrID.add(c.getInt(0));
-                            }
-//                            showDialogDelete(arrID.get(position));
+                cantidad.setHint("Cantidad");
+                pedido.setText("Ordenar");
+                LinearLayout ll=new LinearLayout(view.getContext());
+                ll.setOrientation(LinearLayout.VERTICAL);
+                ll.addView(cantidad);
+                ll.addView(pedido);
+                dialog.setView(ll);
+
+                dialog.setTitle("Denote la cantidad a ordenar");
+
+                pedido.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String Tcantidad= cantidad.getText().toString().trim();
+
+
+
+                        Cursor c = db.getData("SELECT id FROM cafeteria");
+                        ArrayList<Integer> arrID = new ArrayList<Integer>();
+                        while (c.moveToNext()){
+                            arrID.add(c.getInt(0));
                         }
+//                        showDialogUpdate(FoodList.this, arrID.get(position));
+
+
+
+                        Toast.makeText(v.getContext(),arrID.get(position),Toast.LENGTH_SHORT).show();
+
+//                                    PedidoCafeteria pedidoCafeteria = new PedidoCafeteria(listFood.);
                     }
                 });
+
+
                 dialog.show();
                 return true;
             }
