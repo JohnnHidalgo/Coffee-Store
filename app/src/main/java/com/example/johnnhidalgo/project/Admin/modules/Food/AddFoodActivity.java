@@ -17,6 +17,7 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -38,22 +39,23 @@ import java.io.InputStream;
 
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static android.support.v4.content.FileProvider.getUriForFile;
+
 
 public class AddFoodActivity extends AppCompatActivity {
 
-    private static String APP_DIRECTORY = "MyPictureApp/";
-    private static String MEDIA_DIRECTORY = APP_DIRECTORY + "PictureApp";
+    private final String CARPETA_RAIZ="misImagenesPrueba/";
+    private final String RUTA_IMAGEN=CARPETA_RAIZ+"misFotos";
 
-    private final int MY_PERMISSIONS = 100;
-    private final int PHOTO_CODE = 200;
-    private final int SELECT_PICTURE = 300;
+    final int COD_SELECCIONA=10;
+    final int COD_FOTO=20;
 
     EditText edtName, edtPrice;
     Button btnChoose, btnAdd, btnList;
     ImageView imageView;
     private RelativeLayout mRlView;
 
-    private String mPath;
+    private String path;
 
     final int REQUEST_CODE_GALLERY = 999;
 
@@ -67,28 +69,18 @@ public class AddFoodActivity extends AppCompatActivity {
 
         init();
 
-        if(mayRequestStoragePermission())
+        if(validaPermisos()){
             btnChoose.setEnabled(true);
-        else
+        }else{
             btnChoose.setEnabled(false);
-
+        }
 
         btnChoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showOptions();
+                cargarImagen();
             }
         });
-//        btnChoose.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                ActivityCompat.requestPermissions(
-//                        AddFoodActivity.this,
-//                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-//                        REQUEST_CODE_GALLERY
-//                );
-//            }
-//        });
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,90 +122,6 @@ public class AddFoodActivity extends AppCompatActivity {
         return byteArray;
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if(requestCode == MY_PERMISSIONS){
-            if(grantResults.length == 2 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED){
-                Toast.makeText(AddFoodActivity.this, "Permisos aceptados", Toast.LENGTH_SHORT).show();
-                btnChoose.setEnabled(true);
-            }
-        }else{
-            showExplanation();
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-
-        if(resultCode == RESULT_OK){
-            switch (requestCode){
-                case PHOTO_CODE:
-                    MediaScannerConnection.scanFile(this,
-                            new String[]{mPath}, null,
-                            new MediaScannerConnection.OnScanCompletedListener() {
-                                @Override
-                                public void onScanCompleted(String path, Uri uri) {
-                                    Log.i("ExternalStorage", "Scanned " + path + ":");
-                                    Log.i("ExternalStorage", "-> Uri = " + uri);
-                                }
-                            });
-
-
-                    Bitmap bitmap = BitmapFactory.decodeFile(mPath);
-                    imageView.setImageBitmap(bitmap);
-                    break;
-                case SELECT_PICTURE:
-                    Uri path = data.getData();
-                    imageView.setImageURI(path);
-                    break;
-
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString("file_path", mPath);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-
-        mPath = savedInstanceState.getString("file_path");
-    }
-
-    private void showExplanation() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(AddFoodActivity.this);
-        builder.setTitle("Permisos denegados");
-        builder.setMessage("Para usar las funciones de la app necesitas aceptar los permisos");
-        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent();
-                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                Uri uri = Uri.fromParts("package", getPackageName(), null);
-                intent.setData(uri);
-                startActivity(intent);
-            }
-        });
-        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                finish();
-            }
-        });
-
-        builder.show();
-    }
-
-
     private void init(){
         edtName = (EditText) findViewById(R.id.edtName);
         edtPrice = (EditText) findViewById(R.id.edtPrice);
@@ -223,76 +131,173 @@ public class AddFoodActivity extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.imageView);
         mRlView = (RelativeLayout) findViewById(R.id.rl_view);
     }
-    private boolean mayRequestStoragePermission() {
+    private boolean validaPermisos() {
 
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
+        if(Build.VERSION.SDK_INT<Build.VERSION_CODES.M){
             return true;
+        }
 
-        if((checkSelfPermission(WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) &&
-                (checkSelfPermission(CAMERA) == PackageManager.PERMISSION_GRANTED))
+        if((checkSelfPermission(CAMERA)==PackageManager.PERMISSION_GRANTED)&&
+                (checkSelfPermission(WRITE_EXTERNAL_STORAGE)==PackageManager.PERMISSION_GRANTED)){
             return true;
+        }
 
-        if((shouldShowRequestPermissionRationale(WRITE_EXTERNAL_STORAGE)) || (shouldShowRequestPermissionRationale(CAMERA))){
-            Snackbar.make(mRlView, "Los permisos son necesarios para poder usar la aplicación",
-                    Snackbar.LENGTH_INDEFINITE).setAction(android.R.string.ok, new View.OnClickListener() {
-                @TargetApi(Build.VERSION_CODES.M)
-                @Override
-                public void onClick(View v) {
-                    requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE, CAMERA}, MY_PERMISSIONS);
-                }
-            });
+        if((shouldShowRequestPermissionRationale(CAMERA)) ||
+                (shouldShowRequestPermissionRationale(WRITE_EXTERNAL_STORAGE))){
+            cargarDialogoRecomendacion();
         }else{
-            requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE, CAMERA}, MY_PERMISSIONS);
+            requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE,CAMERA},100);
         }
 
         return false;
     }
-    private void showOptions() {
-        final CharSequence[] option = {"Tomar foto", "Elegir de galeria", "Cancelar"};
-        final AlertDialog.Builder builder = new AlertDialog.Builder(AddFoodActivity.this);
-        builder.setTitle("Eleige una opción");
-        builder.setItems(option, new DialogInterface.OnClickListener() {
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if(requestCode==100){
+            if(grantResults.length==2 && grantResults[0]==PackageManager.PERMISSION_GRANTED
+                    && grantResults[1]==PackageManager.PERMISSION_GRANTED){
+                btnChoose.setEnabled(true);
+            }else{
+                solicitarPermisosManual();
+            }
+        }
+
+    }
+
+    private void solicitarPermisosManual() {
+        final CharSequence[] opciones={"si","no"};
+        final AlertDialog.Builder alertOpciones=new AlertDialog.Builder(AddFoodActivity.this);
+        alertOpciones.setTitle("¿Desea configurar los permisos de forma manual?");
+        alertOpciones.setItems(opciones, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if(option[which] == "Tomar foto"){
-                    openCamera();
-                }else if(option[which] == "Elegir de galeria"){
-                    Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    intent.setType("image/*");
-                    startActivityForResult(intent.createChooser(intent, "Selecciona app de imagen"), SELECT_PICTURE);
-                }else {
-                    dialog.dismiss();
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (opciones[i].equals("si")){
+                    Intent intent=new Intent();
+                    intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    Uri uri=Uri.fromParts("package",getPackageName(),null);
+                    intent.setData(uri);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getApplicationContext(),"Los permisos no fueron aceptados",Toast.LENGTH_SHORT).show();
+                    dialogInterface.dismiss();
                 }
             }
         });
-
-        builder.show();
+        alertOpciones.show();
     }
 
-    private void openCamera() {
-        File file = new File(Environment.getExternalStorageDirectory(), MEDIA_DIRECTORY);
-        boolean isDirectoryCreated = file.exists();
+    private void cargarDialogoRecomendacion() {
+        AlertDialog.Builder dialogo=new AlertDialog.Builder(AddFoodActivity.this);
+        dialogo.setTitle("Permisos Desactivados");
+        dialogo.setMessage("Debe aceptar los permisos para el correcto funcionamiento de la App");
 
-        if(!isDirectoryCreated)
-            isDirectoryCreated = file.mkdirs();
+        dialogo.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE,CAMERA},100);
+                }
+            }
+        });
+        dialogo.show();
+    }
 
-        if(isDirectoryCreated){
-            Long timestamp = System.currentTimeMillis() / 1000;
-            String imageName = timestamp.toString() + ".jpg";
 
-            mPath = Environment.getExternalStorageDirectory() + File.separator + MEDIA_DIRECTORY
-                    + File.separator + imageName;
+    public void onclick(View view) {
+        cargarImagen();
+    }
 
-            File newFile = new File(mPath);
+    private void cargarImagen() {
 
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(newFile));
-            startActivityForResult(intent, PHOTO_CODE);
+        final CharSequence[] opciones={"Tomar Foto","Cargar Imagen","Cancelar"};
+        final AlertDialog.Builder alertOpciones=new AlertDialog.Builder(AddFoodActivity.this);
+        alertOpciones.setTitle("Seleccione una Opción");
+        alertOpciones.setItems(opciones, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (opciones[i].equals("Tomar Foto")){
+                    tomarFotografia();
+                }else{
+                    if (opciones[i].equals("Cargar Imagen")){
+                        Intent intent=new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        intent.setType("image/");
+                        startActivityForResult(intent.createChooser(intent,"Seleccione la Aplicación"),COD_SELECCIONA);
+                    }else{
+                        dialogInterface.dismiss();
+                    }
+                }
+            }
+        });
+        alertOpciones.show();
+
+    }
+
+    private void tomarFotografia() {
+        File fileImagen=new File(Environment.getExternalStorageDirectory(),RUTA_IMAGEN);
+        boolean isCreada=fileImagen.exists();
+        String nombreImagen="";
+        if(isCreada==false){
+            isCreada=fileImagen.mkdirs();
+        }
+
+        if(isCreada==true){
+            nombreImagen=(System.currentTimeMillis()/1000)+".jpg";
+        }
+
+
+        path=Environment.getExternalStorageDirectory()+
+                File.separator+RUTA_IMAGEN+File.separator+nombreImagen;
+
+        File imagen=new File(path);
+
+        Intent intent=null;
+        intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        ////
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.N)
+        {
+            String authorities=getApplicationContext().getPackageName()+".provider";
+            Uri imageUri=FileProvider.getUriForFile(this,authorities,imagen);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        }else
+        {
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imagen));
+        }
+        startActivityForResult(intent,COD_FOTO);
+
+        ////
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode==RESULT_OK){
+
+            switch (requestCode){
+                case COD_SELECCIONA:
+                    Uri miPath=data.getData();
+                    imageView.setImageURI(miPath);
+                    break;
+
+                case COD_FOTO:
+                    MediaScannerConnection.scanFile(this, new String[]{path}, null,
+                            new MediaScannerConnection.OnScanCompletedListener() {
+                                @Override
+                                public void onScanCompleted(String path, Uri uri) {
+                                    Log.i("Ruta de almacenamiento","Path: "+path);
+                                }
+                            });
+
+                    Bitmap bitmap= BitmapFactory.decodeFile(path);
+                    imageView.setImageBitmap(bitmap);
+
+                    break;
+            }
+
+
         }
     }
-
-
-
-
 
 }

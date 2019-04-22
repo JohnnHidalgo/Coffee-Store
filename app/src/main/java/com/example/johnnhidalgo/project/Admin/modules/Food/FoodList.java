@@ -74,6 +74,7 @@ public class FoodList extends AppCompatActivity {
             byte[] image = cursor.getBlob(3);
 
             list.add(new Food(name, price, image, id));
+
         }
 
         adapter.notifyDataSetChanged();

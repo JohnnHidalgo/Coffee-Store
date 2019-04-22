@@ -12,7 +12,11 @@ public class Food {
         this.image = image;
         this.id = id;
     }
-
+    public Food(String name, String price, byte[] image) {
+        this.name = name;
+        this.price = price;
+        this.image = image;
+    }
     public int getId() {
         return id;
     }

@@ -36,7 +36,6 @@ public class LoginActivity extends AppCompatActivity {
         registerLog = (Button)findViewById(R.id.btnRegisterLog);
 
         mProgressView = findViewById(R.id.login_progress);
-
         loginLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
