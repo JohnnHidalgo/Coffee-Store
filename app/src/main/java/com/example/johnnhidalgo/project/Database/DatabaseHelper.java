@@ -122,6 +122,32 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     private String DROP_PEDIDO_TABLE = "DROP TABLE IF EXISTS " + TABLE_PEDIDO;
 
 
+
+
+    private static final String TABLE_VENTA = "venta";
+
+    private static final String COLUMN_VENTA_ID = "venta_id";
+    private static final String COLUMN_VENTA_ID_CAFETERIA = "venta_idcafeteria";
+    private static final String COLUMN_VENTA_CANTIDAD = "venta_cantidad";
+
+
+    // create table sql query
+    private String CREATE_VENTA_TABLE =
+            "CREATE TABLE " + TABLE_VENTA +
+                    "(" + COLUMN_VENTA_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + COLUMN_VENTA_ID_CAFETERIA + " INTEGER,"
+                    + COLUMN_VENTA_CANTIDAD + " INTEGER" + ")";
+//                    + " FOREIGN KEY (COLUMN_PEDIDO_ID_CAFETERIA) REFERENCES " + ")";
+
+    // drop table sql query
+    private String DROP_VENTA_TABLE = "DROP TABLE IF EXISTS " + TABLE_PEDIDO;
+
+
+
+
+
+
+
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -135,6 +161,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         db.execSQL(CREATE_CAFETERIA_TABLE);
         db.execSQL(CREATE_MASITAS_TABLE);
         db.execSQL(CREATE_PEDIDO_TABLE);
+        db.execSQL(CREATE_VENTA_TABLE);
     }
 
     @Override
@@ -145,6 +172,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         db.execSQL(DROP_CAFETERIA_TABLE);
         db.execSQL(DROP_MASITAS_TABLE);
         db.execSQL(DROP_PEDIDO_TABLE);
+        db.execSQL(DROP_VENTA_TABLE);
         // Create tables again
         onCreate(db);
 
@@ -543,5 +571,35 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 
 
+    public void insertVenta(int idCafeteria, int cantidad){
+        SQLiteDatabase database = getWritableDatabase();
+        String sql = "INSERT INTO "+TABLE_VENTA+" VALUES (NULL, ?, ?)";
+
+        SQLiteStatement statement = database.compileStatement(sql);
+        statement.clearBindings();
+
+        statement.bindLong(1, idCafeteria);
+        statement.bindLong(2, cantidad);
+
+        statement.executeInsert();
+    }
+
+
+    public  void deleteDataVenta(int id) {
+        SQLiteDatabase database = getWritableDatabase();
+
+        String sql = "DELETE FROM "+TABLE_VENTA+" WHERE pedido_id = ?";
+        SQLiteStatement statement = database.compileStatement(sql);
+        statement.clearBindings();
+        statement.bindDouble(1, (double)id);
+
+        statement.execute();
+        database.close();
+    }
+
+    public Cursor getDataVenta(String sql){
+        SQLiteDatabase database = getReadableDatabase();
+        return database.rawQuery(sql, null);
+    }
 
 }
