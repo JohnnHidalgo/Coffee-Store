@@ -103,23 +103,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     private String DROP_MASITAS_TABLE = "DROP TABLE IF EXISTS " + TABLE_MASITAS;
     private SQLiteDatabase database;
 
-
-
-
-
-
-
-    /*
-
-        int idPedido;
-    int idCafeteria;
-    int cantidad;
-
-
-FOREIGN KEY (idser) REFERENCES servicio(idser)
-
-     */
-
     private static final String TABLE_PEDIDO = "pedido";
 
     private static final String COLUMN_PEDIDO_ID = "pedido_id";
@@ -133,6 +116,7 @@ FOREIGN KEY (idser) REFERENCES servicio(idser)
                     "(" + COLUMN_PEDIDO_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                     + COLUMN_PEDIDO_ID_CAFETERIA + " INTEGER,"
                     + COLUMN_PEDIDO_CANTIDAD + " INTEGER" + ")";
+//                    + " FOREIGN KEY (COLUMN_PEDIDO_ID_CAFETERIA) REFERENCES " + ")";
 
     // drop table sql query
     private String DROP_PEDIDO_TABLE = "DROP TABLE IF EXISTS " + TABLE_PEDIDO;

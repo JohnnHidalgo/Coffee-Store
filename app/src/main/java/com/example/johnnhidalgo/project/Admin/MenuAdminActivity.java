@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.example.johnnhidalgo.project.Admin.modules.Clientes.ClientesActivity;
 import com.example.johnnhidalgo.project.Admin.modules.Masitas.MasitasList;
+import com.example.johnnhidalgo.project.Admin.modules.Pedidos.PedidosList;
 import com.example.johnnhidalgo.project.Admin.modules.Personal.PersonalActivity;
 import com.example.johnnhidalgo.project.Admin.modules.Food.FoodList;
 import com.example.johnnhidalgo.project.R;
@@ -59,6 +60,14 @@ public class MenuAdminActivity extends AppCompatActivity {
             }
         });
 
+
+        btnPedidos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent accountsIntent = new Intent(getApplicationContext(), PedidosList.class);
+                startActivity(accountsIntent);
+            }
+        });
 
     }
 }

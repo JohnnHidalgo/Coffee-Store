@@ -4,16 +4,14 @@ public class PedidoMasita {
     int idPedido;
     int idMasita;
     int cantidad;
-    int presio;
 
     public PedidoMasita() {
     }
 
-    public PedidoMasita(int idPedido, int idMasita, int cantidad, int presio) {
+    public PedidoMasita(int idPedido, int idMasita, int cantidad) {
         this.idPedido = idPedido;
         this.idMasita = idMasita;
         this.cantidad = cantidad;
-        this.presio = presio;
     }
 
     public int getIdPedido() {
@@ -40,11 +38,4 @@ public class PedidoMasita {
         this.cantidad = cantidad;
     }
 
-    public int getPresio() {
-        return presio;
-    }
-
-    public void setPresio(int presio) {
-        this.presio = presio;
-    }
 }

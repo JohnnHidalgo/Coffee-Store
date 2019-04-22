@@ -98,46 +98,6 @@ public class PedidoList extends AppCompatActivity {
         adapterMasitas.notifyDataSetChanged();
 
 
-//        gridViewCafeteria.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(final View v) {
-//                android.app.AlertDialog.Builder a_builder = new android.app.AlertDialog.Builder(v.getContext());
-//                final EditText cantidad = new EditText(v.getContext());
-//                cantidad.setHint("Cantidad");
-//                LinearLayout ll=new LinearLayout(v.getContext());
-//                ll.setOrientation(LinearLayout.VERTICAL);
-//                ll.addView(cantidad);
-//                a_builder.setView(ll);
-//
-//                a_builder.setMessage("Denote la cantidad que desea ordenar")
-//                        .setCancelable(false)
-//                        .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                String nName= cantidad.getText().toString().trim();
-//                                listFood.get(0);
-//
-//                                Toast.makeText(v.getContext(),listFood.get(0).getId(),Toast.LENGTH_SHORT).show();
-//
-////                                    PedidoCafeteria pedidoCafeteria = new PedidoCafeteria(listFood.);
-////                                    Cliente cliente = new Cliente(textViewName.getText().toString(),textViewPassword.getText().toString());
-////                                    db.updateCliente(cliente,nName,nPass);
-//                                    Toast.makeText(v.getContext(),"Actualizado",Toast.LENGTH_SHORT).show();
-//
-//                            }
-//                        })
-//                        .setNegativeButton("No",new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                dialog.cancel();
-//                            }
-//                        }) ;
-//                android.app.AlertDialog alert = a_builder.create();
-//                alert.setTitle("Alerta !!!");
-//                alert.show();
-//            }
-//        });
-
         gridViewCafeteria.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
@@ -196,36 +156,58 @@ public class PedidoList extends AppCompatActivity {
         gridViewMasitas.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+//                Toast.makeText(getApplicationContext(),"FFF",Toast.LENGTH_LONG).show();
 
-                CharSequence[] items = {"Update", "Delete"};
-                AlertDialog.Builder dialog = new AlertDialog.Builder(PedidoList.this);
+                AlertDialog.Builder venta =  new AlertDialog.Builder(PedidoList.this);
 
-                dialog.setTitle("Choose an action");
-                dialog.setItems(items, new DialogInterface.OnClickListener() {
+                AlertDialog.Builder dialogB = new AlertDialog.Builder(PedidoList.this);
+
+                final EditText cantidad = new EditText(view.getContext());
+                final Button pedido = new Button(view.getContext());
+
+                cantidad.setHint("Cantidad");
+                pedido.setText("Ordenar");
+                LinearLayout ll=new LinearLayout(view.getContext());
+                ll.setOrientation(LinearLayout.VERTICAL);
+                ll.addView(cantidad);
+                ll.addView(pedido);
+                dialogB.setView(ll);
+
+                dialogB.setTitle("Denote la cantidad a ordenar");
+
+                pedido.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int item) {
-                        if (item == 0) {
-                            // update
-                            Cursor c = db.getDataMasitas("SELECT id FROM masitas");
-                            ArrayList<Integer> arrID = new ArrayList<Integer>();
-                            while (c.moveToNext()){
-                                arrID.add(c.getInt(0));
-                            }
-                            // show dialog update at here
-//                            showDialogUpdate(PedidoList.this, arrID.get(position));
+                    public void onClick(View v) {
+                        String Tcantidad= cantidad.getText().toString().trim();
+                        int cant;
+                        int idCafeteria;
 
-                        } else {
-                            // delete
-                            Cursor c = db.getDataMasitas("SELECT id FROM masitas");
-                            ArrayList<Integer> arrID = new ArrayList<Integer>();
-                            while (c.moveToNext()){
-                                arrID.add(c.getInt(0));
-                            }
-//                            showDialogDelete(arrID.get(position));
+                        cant = Integer.parseInt(Tcantidad);
+
+                        Cursor c = db.getData("SELECT masitas_id FROM masitas");
+                        ArrayList<Integer> arrID = new ArrayList<Integer>();
+                        while (c.moveToNext()){
+                            arrID.add(c.getInt(0));
                         }
+
+                        idCafeteria = arrID.get(position);
+                        try{
+                            db.insertPedido(
+                                    idCafeteria,
+                                    cant
+                            );
+                            Toast.makeText(getApplicationContext(), "Added successfully!", Toast.LENGTH_SHORT).show();
+                            cantidad.setText("");
+                        }
+
+                        catch (Exception e){
+                            e.printStackTrace();
+                        }
+
+
                     }
                 });
-                dialog.show();
+
                 return true;
             }
         });
