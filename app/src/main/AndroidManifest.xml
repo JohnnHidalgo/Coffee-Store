@@ -42,7 +42,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".Admin.modules.Personal.PersonalActivity"
-            android:label="@string/title_activity_personal" />
+            android:label="Personal" />
         <activity android:name=".Admin.modules.Personal.AddPersonalActivity" />
         <activity android:name=".Admin.modules.Cafeteria.CafeteriaActivity" />
         <activity android:name=".Admin.modules.Cafeteria.AddCafeteriaActivity" />

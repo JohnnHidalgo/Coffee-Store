@@ -12,6 +12,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -108,6 +109,7 @@ public class PedidoList extends AppCompatActivity {
                 final Button pedido = new Button(view.getContext());
 
                 cantidad.setHint("Cantidad");
+                cantidad.setInputType(InputType.TYPE_CLASS_NUMBER);
                 pedido.setText("Ordenar");
                 LinearLayout ll=new LinearLayout(view.getContext());
                 ll.setOrientation(LinearLayout.VERTICAL);

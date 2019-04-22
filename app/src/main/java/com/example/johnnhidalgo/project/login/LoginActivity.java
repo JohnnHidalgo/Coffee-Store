@@ -48,6 +48,8 @@ public class LoginActivity extends AppCompatActivity {
                     //Cambiar menu de cliente
                     Intent accountsIntent = new Intent(activity, MenuClienteActivity.class);
                     startActivity(accountsIntent);
+                    usernameLog.setText("");
+                    passwordLog.setText("");
                 }
                 else if(dbLog.checkUser(username,password)){
                     Toast.makeText(getApplicationContext(),"Bienvenido",Toast.LENGTH_SHORT).show();
