@@ -9,7 +9,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".login.LoginActivity">
+    tools:context=".login.LoginActivity"
+    android:background="#300a02">
 
     <ProgressBar
         android:id="@+id/login_progress"
@@ -24,17 +25,23 @@
         android:layout_width="179dp"
         android:layout_height="44dp"
         android:layout_marginTop="180dp"
+        android:backgroundTint="@color/colorAccent"
+        android:hint="UserName"
+        android:textColorHint="@color/colorPrimary"
         android:maxLines="1"
-        android:hint="UserName" />
+        android:textColor="#ffffff" />
 
     <EditText
         android:id="@+id/passwordLog"
         android:layout_width="179dp"
         android:layout_height="44dp"
         android:layout_marginTop="12dp"
+        android:backgroundTint="@color/colorAccent"
         android:maxLines="1"
         android:inputType="textPassword"
-        android:hint="Password"/>
+        android:hint="Password"
+        android:textColorHint="@color/colorPrimary"
+        android:textColor="#ffffff"/>
 
     <Button
         android:id="@+id/btnLoginLog"
@@ -52,13 +59,14 @@
         android:id="@+id/btnRegisterLog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="No tienes una cuenta, Regístrate!"/>
+        android:background="@android:color/transparent"
+        android:text="No tienes una cuenta, Regístrate!"
+        android:textColor="#ffffff"/>
 
 </LinearLayout>
