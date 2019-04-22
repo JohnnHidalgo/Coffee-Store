@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.johnnhidalgo.project.Admin.modules.Personal.PersonalActivity;
+import com.example.johnnhidalgo.project.Cliente.modules.Maps.MapsActivity;
 import com.example.johnnhidalgo.project.Cliente.modules.Pedidos.PedidoList;
 import com.example.johnnhidalgo.project.R;
 
@@ -33,7 +34,13 @@ public class MenuClienteActivity extends AppCompatActivity {
         });
 
 
-
+        btnMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent accountsIntent = new Intent(getApplicationContext(), MapsActivity.class);
+                startActivity(accountsIntent);
+            }
+        });
 
     }
 
