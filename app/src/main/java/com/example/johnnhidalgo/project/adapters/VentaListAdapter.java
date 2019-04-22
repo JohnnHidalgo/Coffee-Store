@@ -8,41 +8,41 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.johnnhidalgo.project.R;
-import com.example.johnnhidalgo.project.modelos.PedidoCafeteria;
+import com.example.johnnhidalgo.project.modelos.VentaCafeteria;
 
 import java.util.ArrayList;
 
-public class PedidoListAdapter extends BaseAdapter{
+public class VentaListAdapter extends BaseAdapter{
+
     private Context context;
     private  int layout;
-    private ArrayList<PedidoCafeteria> pedidoList;
+    private ArrayList<VentaCafeteria> ventaList;
 
-    public PedidoListAdapter(Context context, int layout, ArrayList<PedidoCafeteria> pedidoList) {
+    public VentaListAdapter(Context context, int layout, ArrayList<VentaCafeteria> ventaList) {
         this.context = context;
         this.layout = layout;
-        this.pedidoList = pedidoList;
+        this.ventaList = ventaList;
     }
 
     @Override
     public int getCount() {
-        return pedidoList.size();
+        return ventaList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return pedidoList.get(position);
+        return ventaList.get(position);
     }
-
 
     @Override
     public long getItemId(int position) {
         return position;
     }
 
-
     private class ViewHolder{
         TextView txtIdcafeteria, txtcantidad;
     }
+
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         View row = view;
@@ -51,8 +51,8 @@ public class PedidoListAdapter extends BaseAdapter{
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             row = inflater.inflate(layout, null);
 
-            holder.txtIdcafeteria = (TextView) row.findViewById(R.id.txtCafeteria);
-            holder.txtcantidad = (TextView) row.findViewById(R.id.txtCantidad);
+            holder.txtIdcafeteria = (TextView) row.findViewById(R.id.txtCafeteriaVenta);
+            holder.txtcantidad = (TextView) row.findViewById(R.id.txtCantidadVenta);
             row.setTag(holder);
         }
         else {
@@ -60,11 +60,11 @@ public class PedidoListAdapter extends BaseAdapter{
         }
 
 
-        PedidoCafeteria pedidoCafeteria = pedidoList.get(position);
+        VentaCafeteria ventaCafeteria = ventaList.get(position);
 
 
-        String id = String.valueOf(pedidoCafeteria.getIdCafeteria());
-        String cant = String.valueOf(pedidoCafeteria.getCantidad());
+        String id = String.valueOf(ventaCafeteria.getIdCafeteria());
+        String cant = String.valueOf(ventaCafeteria.getCantidad());
 
         holder.txtIdcafeteria.setText(id);
         holder.txtcantidad.setText(cant);
@@ -72,6 +72,5 @@ public class PedidoListAdapter extends BaseAdapter{
         return row;
 
     }
-
 
 }

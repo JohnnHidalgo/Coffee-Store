@@ -6,4 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".Admin.modules.Venta.VentaList">
 
+
+    <GridView
+        android:id="@+id/gridViewVenta"
+        android:layout_width="wrap_content"
+        android:layout_height="280dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:columnWidth="120dp"
+        android:gravity="center"
+        android:numColumns="auto_fit" />
+
+
 </android.support.constraint.ConstraintLayout>

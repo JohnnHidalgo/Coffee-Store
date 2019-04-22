@@ -588,7 +588,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public  void deleteDataVenta(int id) {
         SQLiteDatabase database = getWritableDatabase();
 
-        String sql = "DELETE FROM "+TABLE_VENTA+" WHERE pedido_id = ?";
+        String sql = "DELETE FROM "+TABLE_VENTA+" WHERE venta_id = ?";
         SQLiteStatement statement = database.compileStatement(sql);
         statement.clearBindings();
         statement.bindDouble(1, (double)id);
@@ -598,7 +598,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     }
 
     public Cursor getDataVenta(String sql){
-        SQLiteDatabase database = getReadableDatabase();
+        SQLiteDatabase database = this.getReadableDatabase();
         return database.rawQuery(sql, null);
     }
 

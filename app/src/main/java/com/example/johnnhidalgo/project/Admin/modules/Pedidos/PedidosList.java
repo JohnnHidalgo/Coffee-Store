@@ -1,11 +1,20 @@
 package com.example.johnnhidalgo.project.Admin.modules.Pedidos;
 
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.example.johnnhidalgo.project.Admin.modules.Food.FoodList;
+import com.example.johnnhidalgo.project.Admin.modules.Venta.VentaList;
 import com.example.johnnhidalgo.project.Database.DatabaseHelper;
 import com.example.johnnhidalgo.project.R;
 import com.example.johnnhidalgo.project.adapters.FoodListAdapter;
@@ -49,6 +58,57 @@ public class PedidosList extends AppCompatActivity {
         adapter.notifyDataSetChanged();
 
 
+        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                Toast.makeText(getApplicationContext(),"FFF",Toast.LENGTH_LONG).show();
+                CharSequence[] items = {"Despachado"};
+                AlertDialog.Builder dialog = new AlertDialog.Builder(PedidosList.this);
 
+                dialog.setTitle("Choose an action");
+                dialog.setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int item) {
+                        if (item == 0) {
+                            int cant;
+                            int idPedido;
+
+                            Cursor c = db.getDataPedido("SELECT pedido_id FROM pedido");
+                            ArrayList<Integer> arrID = new ArrayList<Integer>();
+                            ArrayList<Integer> arrCant = new ArrayList<Integer>();
+
+
+                            while (c.moveToNext()){
+                                arrID.add(c.getInt(0));
+                                arrCant.add(c.getInt(0));
+                            }
+
+                            idPedido = arrID.get(position);
+                            cant = arrCant.get(position);
+                            try{
+                                db.insertVenta(
+                                        idPedido,
+                                        cant
+                                );
+                                Toast.makeText(getApplicationContext(), "Added successfully!", Toast.LENGTH_SHORT).show();
+
+                            }
+                            catch (Exception e){
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });
+                dialog.show();
+
+                return true;
+            }
+        });
     }
 }
+
+/*
+
+
+
+ */

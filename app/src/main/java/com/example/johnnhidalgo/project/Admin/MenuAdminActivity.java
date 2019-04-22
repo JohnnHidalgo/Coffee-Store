@@ -12,6 +12,7 @@ import com.example.johnnhidalgo.project.Admin.modules.Masitas.MasitasList;
 import com.example.johnnhidalgo.project.Admin.modules.Pedidos.PedidosList;
 import com.example.johnnhidalgo.project.Admin.modules.Personal.PersonalActivity;
 import com.example.johnnhidalgo.project.Admin.modules.Food.FoodList;
+import com.example.johnnhidalgo.project.Admin.modules.Venta.VentaList;
 import com.example.johnnhidalgo.project.R;
 
 public class MenuAdminActivity extends AppCompatActivity {
@@ -60,11 +61,18 @@ public class MenuAdminActivity extends AppCompatActivity {
             }
         });
 
-
         btnPedidos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent accountsIntent = new Intent(getApplicationContext(), PedidosList.class);
+                startActivity(accountsIntent);
+            }
+        });
+
+        btnVentas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent accountsIntent = new Intent(getApplicationContext(), VentaList.class);
                 startActivity(accountsIntent);
             }
         });
